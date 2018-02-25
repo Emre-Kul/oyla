@@ -1,0 +1,10 @@
+{
+  "name": "sis-rek",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Emre-Kul <emrekul35@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Emre-Kul/sis-rek"
+}
