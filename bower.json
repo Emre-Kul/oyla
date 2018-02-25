@@ -6,5 +6,8 @@
     "Emre-Kul <emrekul35@gmail.com>"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/Emre-Kul/sis-rek"
+  "homepage": "https://github.com/Emre-Kul/sis-rek",
+  "dependencies": {
+    "bootstrap": "^4.0.0"
+  }
 }
