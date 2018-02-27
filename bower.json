@@ -8,6 +8,7 @@
   "license": "ISC",
   "homepage": "https://github.com/Emre-Kul/sis-rek",
   "dependencies": {
-    "bootstrap": "^4.0.0"
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1"
   }
 }
