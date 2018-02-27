@@ -4,12 +4,13 @@
   "description": "Oyla projesi YTU Sistem Programlama dersi için hazırlanmış bir anket uygulamasıdır.",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Emre Kul,Kaan Sönmezöz,Ramazan Vapurcu",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "mysql": "^2.15.0"
   },
