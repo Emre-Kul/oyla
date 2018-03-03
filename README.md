@@ -1,12 +1,13 @@
 # Oyla
-Oyla, Sistem Programlama(YTÜ) dersi için oluşturulmuş, web tabanlı bir anket sistemi projesidir.
+Oyla, Yıldız Teknik Üniversitesi Bilgisayar Mühendisliği Sistem Programlama dersi için oluşturulmuş, web tabanlı bir anket sistemi projesidir.
 ### Kurulum
 ```sh
 $ npm install
 $ bower install
 $ npm start
 ```
-### TAKIM
+
+### Takım Üyeleri
 * Emre Kul
 * Kaan Sönmezöz
 * Ramazan Vapurcu
