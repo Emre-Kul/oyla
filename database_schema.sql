@@ -14,7 +14,7 @@ CREATE TABLE `SURVEY` (
 	`create_date` DATE NOT NULL,
 	`update_date` DATE NOT NULL,
 	`deadline` DATE,
-	`is_visible` BOOLEAN NOT NULL DEFAULT 0,  		-- 0-> Survey is accessible, 1-> It is only seen by it's creator
+	`is_visible` BOOLEAN NOT NULL DEFAULT 0,  	-- 1-> Survey is accessible, 0-> It is only seen by it's creator
 	`visible_to_users` BOOLEAN NOT NULL DEFAULT 0,	-- 0-> Survey is visible to registered users. 1-> Visible to everyone
 	PRIMARY KEY (`id`)
 );
@@ -44,10 +44,10 @@ CREATE TABLE `MULTIPLE_CHOICE` (
 
 CREATE TABLE `ANSWER` (
 	`id` BINARY NOT NULL AUTO_INCREMENT,	-- Distinct id for each answer
-	`description` TEXT NOT NULL,			-- Answer of the question
-	`question_id` BINARY NOT NULL,			-- ID of the question which will be answered
-	`survey_id` BINARY NOT NULL,  			-- ID of the survey where question's asked
-	`user_id` BINARY NOT NULL,    			-- ID of the user who answered the question
+	`description` TEXT NOT NULL,		-- Answer of the question
+	`question_id` BINARY NOT NULL,		-- ID of the question which will be answered
+	`survey_id` BINARY NOT NULL,  		-- ID of the survey where question's asked
+	`user_id` BINARY NOT NULL,    		-- ID of the user who answered the question
 	PRIMARY KEY ('id')
 );
 
