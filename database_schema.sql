@@ -14,8 +14,8 @@ CREATE TABLE `SURVEY` (
 	`create_date` DATE NOT NULL,
 	`update_date` DATE NOT NULL,
 	`deadline` DATE,
-	`is_visible` BOOLEAN NOT NULL DEFAULT 0,  		-- Open to discussion
-	`visible_to_users` BOOLEAN NOT NULL DEFAULT 0,	-- Open to discussion
+	`is_visible` BOOLEAN NOT NULL DEFAULT 0,  		-- 0-> Survey is accessible, 1-> It is only seen by it's creator
+	`visible_to_users` BOOLEAN NOT NULL DEFAULT 0,	-- 0-> Survey is visible to registered users. 1-> Visible to everyone
 	PRIMARY KEY (`id`)
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE `PROFILE` (
 CREATE TABLE `QUESTION` (
 	`id` BINARY NOT NULL AUTO_INCREMENT,
 	`survey_id` BINARY NOT NULL,
-	`description` TEXT NOT NULL,   			-- Open to discussion
+	`description` TEXT NOT NULL,   			
 	`multiple_choice` BOOLEAN NOT NULL,
 	PRIMARY KEY (`id`)
 );
@@ -44,7 +44,7 @@ CREATE TABLE `MULTIPLE_CHOICE` (
 
 CREATE TABLE `ANSWER` (
 	`id` BINARY NOT NULL AUTO_INCREMENT,	-- Distinct id for each answer
-	`description` TEXT NOT NULL,			-- Answer of the question (Eger multiple choice ilgili verilecek bir cevap ise isaretlenen checkbox'un description'u gelsin en azından not null olur ve cevap belli olur olur ?)
+	`description` TEXT NOT NULL,			-- Answer of the question
 	`question_id` BINARY NOT NULL,			-- ID of the question which will be answered
 	`survey_id` BINARY NOT NULL,  			-- ID of the survey where question's asked
 	`user_id` BINARY NOT NULL,    			-- ID of the user who answered the question
