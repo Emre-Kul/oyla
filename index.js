@@ -6,8 +6,12 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, '/public')));
 
+app.get('/login', (req, res) => {
+    res.render('pages/login');
+});
+
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('pages/index');
 });
 
 const server = app.listen(process.env.PORT || 8080, () => {
