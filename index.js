@@ -6,6 +6,11 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, '/public')));
 
+
+app.get('/register', (req, res) => {
+    res.render('pages/register');
+});
+
 app.get('/login', (req, res) => {
     res.render('pages/login');
 });
