@@ -18,11 +18,13 @@ Proje için daha önceden yapılmış SurveyMonkey, Doodle gibi web tabanlı ank
 ### Kullanıcı Rolleri ve Fonksiyonları
 * Genel Kullanıcı
     * Herkese Açık Anketleri Görüntüleme
+    * Anahtar Kelimeler ile Anket Arama
     * Mevcut Anket Görüntüleme
     * Mevcut Anket Doldurma
 
 * Anket Oluşturan Kullanıcı
     * Yeni Anket Oluşturma
+    * Oluşturduğu Anketlere Anahtar Kelimeler Ekleme
     * Mevcut Anketleri Görüntüleme
     * Mevcut Anket Raporu Görüntüleme
     * Mevcut Anket Raporunu Dışarı Aktarma
