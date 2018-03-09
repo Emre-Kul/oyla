@@ -1,23 +1,17 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
 
 app.set('view engine', 'ejs');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, '/public')));
 
-
-app.get('/register', (req, res) => {
-    res.render('pages/register');
-});
-
-app.get('/login', (req, res) => {
-    res.render('pages/login');
-});
-
-app.get('/', (req, res) => {
-    res.render('pages/index');
-});
+require('./routes/views.js')(app);
 
 const server = app.listen(process.env.PORT || 8080, () => {
     const host = server.address().address;
