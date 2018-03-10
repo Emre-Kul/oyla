@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const models = require('./models');
 
 const app = express();
 
@@ -13,9 +14,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 require('./routes/views.js')(app);
 
-const server = app.listen(process.env.PORT || 8080, () => {
-    const host = server.address().address;
-    const port = server.address().port;
-    console.log(`Server Started At ${host} ${port}`);
+models.sequelize.sync().then(function () {
+    const server = app.listen(process.env.PORT || 8080, () => {
+        const host = server.address().address;
+        const port = server.address().port;
+        console.log(`Server Started At ${host} ${port}`);
+    });    
 });
+
 
