@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 require('./routes/views.js')(app);
 
-models.sequelize.sync({force: true}).then(function () {
+models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
         console.log('Server Started At', server.address().port);
     });
