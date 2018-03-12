@@ -18,8 +18,8 @@ models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
         const host = server.address().address;
         const port = server.address().port;
-        console.log(`Server Started At ${host} ${port}`);
+        console.log('Server Started At ${host} ${port}');
     });    
+}).catch(err => {
+    console.error('Unable to connect to the database: ', err);
 });
-
-
