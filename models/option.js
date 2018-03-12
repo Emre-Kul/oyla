@@ -2,9 +2,18 @@
 module.exports = (sequelize, DataTypes) => {
   var Option = sequelize.define('Option', {
     option: DataTypes.STRING
-  }, {});
+  }, {
+    timestamps: false,
+    underscored: true
+  });
   Option.associate = function(models) {
-    // associations can be defined here
+    models.Option.belongsTo(models.Question, {
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    models.Option.hasMany(models.Answer);
   };
   return Option;
 };
