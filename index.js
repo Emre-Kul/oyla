@@ -17,7 +17,7 @@ require('./routes/views.js')(app);
 models.sequelize.sync({force: true}).then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
         console.log('Server Started At', server.address().port);
-    });    
+    });
 }).catch(err => {
     console.error('Unable to connect to the database: ', err);
 });
