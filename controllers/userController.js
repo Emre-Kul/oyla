@@ -7,7 +7,17 @@ exports.loginPost = function (req, res) {
 
 exports.registerPost = function (req, res) {
     const { username, email, password, repassword } = req.body;
-    
+    /*
+    res.render('pages/register',{
+        error : 
+        { 
+            username : {
+                value : username,
+                message : `Username in Use`
+            }
+        }
+    });
+    */
     if(password !== repassword){
         res.send("Passwords Not Same!");
         return;
@@ -24,5 +34,4 @@ exports.registerPost = function (req, res) {
         res.status(404).send("ERR");
         console.log(err);
     });
-
 }

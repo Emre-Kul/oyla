@@ -23,7 +23,14 @@
                         <form method="POST">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
+                                <% if(typeof error != 'undefined' && typeof error.username != 'undefined' ){ %>
+                                <input type="text" class="form-control is-invalid" id="username" name="username" placeholder="Username" required="required" value="<%= error.username.value %>"/> 
+                                <div class="invalid-feedback">
+                                    <%= error.username.message %>
+                                </div>
+                                <% } else { %>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/> 
+                                <% } %>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
