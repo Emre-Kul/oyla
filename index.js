@@ -12,7 +12,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '/public')));
 
-require('./routes/views.js')(app);
+app.use('/',require('./routes/index.js'));
+app.use('/login',require('./routes/login.js'));
+app.use('/register',require('./routes/register.js'));
 
 models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
