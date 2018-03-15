@@ -1,8 +1,16 @@
 const models = require('../models/');
 
+exports.loginGet = function(req,res){
+    res.render('pages/login');
+}
+
 exports.loginPost = function (req, res) {
     const { email, password } = req.body;
     res.send(`Will Login With ${email} --- ${password}`);
+}
+
+exports.registerGet = function(req,res){
+    res.render('pages/register');
 }
 
 exports.registerPost = function (req, res) {
