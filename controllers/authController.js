@@ -28,7 +28,6 @@ exports.registerPost = function (req, res) {
     models.User.create({username : username,password : password,email : email,token : 'NONE'}).then((user) => {
         res.render('pages/index');
     }).catch((err) => {
-        res.status(404).send("ERR");
-        console.log(err);
+        res.status(404).send(err.errors[0].message);
     });
 }
