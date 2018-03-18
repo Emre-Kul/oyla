@@ -2,16 +2,15 @@
 <html lang="en">
 
 <head>
-    <% include ../partials/header.ejs %>
-
-    <title>LOGIN</title>
-
+    <% include ../partials/head.ejs %>
+    <title>Login | Oyla</title>
 </head>
 
 <body>
     <% var page = 'login' %>
-    <% include ../partials/navbar.ejs %>
-    <div class="container mt-5">
+    <% include ../partials/header.ejs %>
+
+    <main role="main" class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card text-center">
@@ -50,8 +49,10 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </main> 
+
     <% include ../partials/footer.ejs %>
+    
     <!-- SPECIAL SCRIPTS -->
     <script src="/js/authControl.js"></script>
 </body>
