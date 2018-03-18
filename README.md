@@ -49,7 +49,7 @@ Proje için daha önceden yapılmış SurveyMonkey, Doodle gibi web tabanlı ank
     * Görsel Grafikler
 
 ## Veritabanı
-
+---
 ![Veritabanı](https://github.com/Emre-Kul/oyla/blob/master/database_schema.png?raw=true)
 
 ## Takım Üyeleri
