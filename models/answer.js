@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Answer = sequelize.define('Answer', {
-    answer: DataTypes.STRING
+    answer: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     underscored: true
   });

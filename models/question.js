@@ -1,15 +1,21 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Question = sequelize.define('Question', {
-    question: DataTypes.STRING,
-    type: DataTypes.ENUM(
-      'text_box',
-      'multiple_choice',
-      'voting',
-      'check_box',
-      'list',
-      'sorting'
-    )
+    question: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.ENUM(
+        'text_box',
+        'multiple_choice',
+        'voting',
+        'check_box',
+        'list',
+        'sorting'
+      ),
+      allowNull: false
+    }
   }, {
     underscored: true
   });

@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Option = sequelize.define('Option', {
-    option: DataTypes.STRING
+    option: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     timestamps: false,
     underscored: true

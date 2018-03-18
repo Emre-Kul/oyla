@@ -1,8 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var UserMeta = sequelize.define('UserMeta', {
-    key: DataTypes.STRING,
-    value: DataTypes.STRING
+    key: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    value: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     underscored: true
   });
