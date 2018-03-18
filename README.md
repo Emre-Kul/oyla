@@ -48,6 +48,10 @@ Proje için daha önceden yapılmış SurveyMonkey, Doodle gibi web tabanlı ank
     * Günlük / Aylık Anket Raporu
     * Görsel Grafikler
 
+## Veritabanı
+
+![Veritabanı](https://github.com/Emre-Kul/oyla/blob/master/database_schema.png?raw=true)
+
 ## Takım Üyeleri
 ---
 * Emre Kul
