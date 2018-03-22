@@ -28,15 +28,6 @@ app.use('/', require('./routes/index.js'));
 app.use('/login', require('./routes/login.js'));
 app.use('/register', require('./routes/register.js'));
 
-// This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
-// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
-app.use((req, res, next) => {
-    if (req.cookies.user_sid && !req.session.user) {
-        res.clearCookie('user_sid');
-    }
-    next();
-});
-
 models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
         console.log('Server Started At', server.address().port);

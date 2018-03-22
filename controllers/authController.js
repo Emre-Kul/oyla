@@ -1,4 +1,5 @@
 const models = require('../models/');
+
 exports.authControl = function (req, res, next) {
     if (req.session.user) {
         res.redirect('/');
@@ -50,7 +51,7 @@ exports.registerPost = function (req, res) {
     }
 
     models.User.create({ username: username, password: password, email: email, token: 'NONE' }).then((user) => {
-        res.render('pages/index');
+        res.redirect('/');
     }).catch((err) => {
         res.status(404).send(err.errors[0].message);
     });
