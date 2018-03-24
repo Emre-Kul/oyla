@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     ip: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    user_id: DataTypes.INTEGER
   }, {
     underscored: true
   });
