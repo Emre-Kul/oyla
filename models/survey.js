@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     models.Survey.hasMany(models.Question);
     models.Survey.hasMany(models.SurveyTag);
+    models.Survey.hasMany(models.SurveyRecord);
   };
   return Survey;
 };

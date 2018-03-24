@@ -15,8 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         'sorting'
       ),
       allowNull: false
-    }
+    },
+    restriction: DataTypes.STRING
   }, {
+    timestamps: false,
     underscored: true
   });
   Question.associate = function(models) {

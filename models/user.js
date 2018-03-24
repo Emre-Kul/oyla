@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
     models.User.hasMany(models.UserMeta);
+    models.User.hasOne(models.UserProfile);
   };
 
   User.prototype.validPassword = function (password) {
