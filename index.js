@@ -22,6 +22,11 @@ app.use(session({
     }
 }));
 
+app.use(function(req, res, next) {
+    res.locals.session = req.session.user;
+    next();
+});
+
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index.js'));

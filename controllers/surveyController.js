@@ -5,7 +5,7 @@ exports.showSurvey = function (req, res) {
 }
 
 exports.newSurvey = function (req, res) {
-    res.render('pages/newSurvey')
+    res.render('pages/newSurvey');
 }
 
 exports.createSurvey = function (req, res) {
