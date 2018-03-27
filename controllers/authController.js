@@ -59,5 +59,6 @@ exports.registerPost = function (req, res) {
 
 exports.logoutGet = function (req, res) {
     req.session.destroy();
-    res.redirect('/');//i can create page for that
+    res.redirect('/');
+    //res.render('pages/logout');//buggy
 }
