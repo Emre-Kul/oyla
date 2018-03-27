@@ -56,3 +56,8 @@ exports.registerPost = function (req, res) {
         res.status(404).send(err.errors[0].message);
     });
 }
+
+exports.logoutGet = function (req, res) {
+    req.session.destroy();
+    res.redirect('/');//i can create page for that
+}

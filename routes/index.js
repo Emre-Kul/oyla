@@ -5,9 +5,4 @@ router.get('/', (req, res) => {
     res.render('pages/index');
 });
 
-router.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');//i can create page for that
-});
-
 module.exports = router;
