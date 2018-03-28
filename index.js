@@ -30,8 +30,7 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index.js'));
-app.use('/login', require('./routes/login.js'));
-app.use('/register', require('./routes/register.js'));
+app.use('/auth', require('./routes/auth.js'));
 app.use('/survey', require('./routes/survey.js'));
 
 models.sequelize.sync().then(function () {
