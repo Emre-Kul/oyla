@@ -9,6 +9,8 @@
   "homepage": "https://github.com/Emre-Kul/sis-rek",
   "dependencies": {
     "bootstrap": "^4.0.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "nestable2": "^1.6.0",
+    "jquery-bar-rating": "^1.2.2"
   }
 }

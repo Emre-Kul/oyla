@@ -14,22 +14,28 @@
         <div class="row">
             <div class="col-sm-8">
                     <h1 class="mt-2">Create a new survey</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <p class="lead">You can get to know thoughts of the people by adding different questions.</p>
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/register" role="button">Signup now</a>
-                </p>
+                <form id="new-survey" method="POST">
+                    <div class="form-group">
+                        <label for="inputTitle">Survey Title</label>
+                        <input type="email" class="form-control" id="inputTitle" name="title" aria-describedby="titleHelp" placeholder="Enter title">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Create the survey</button>
+                </form>
             </div>
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">
-                        Featured
+                        Add new question
                     </div>
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-secondary btn-block">Text Box</a>
+                            <a href="#" class="btn btn-secondary btn-block">Check Box</a>
+                            <a href="#" class="btn btn-secondary btn-block">Multiple Choices</a>
+                            <a href="#" class="btn btn-secondary btn-block">Dropdown List</a>
+                            <a href="#" class="btn btn-secondary btn-block">Voting</a>
+                            <a href="#" class="btn btn-secondary btn-block">Sorting</a>
                         </div>
                 </div>
             </div>
@@ -38,6 +44,15 @@
     </main>
     
     <% include ../partials/footer.ejs %>
+    <script src="/components/jquery-bar-rating/jquery.barrating.js"></script>
+    <script src="/components/nestable2/jquery.nestable.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#example').barrating({
+                theme: 'fontawesome-stars'
+            });
+        });
+    </script>     
 
 </body>
 
