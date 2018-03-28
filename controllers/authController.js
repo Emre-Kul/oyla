@@ -17,10 +17,7 @@ exports.loginPost = function (req, res) {
     const { email, password } = req.body;
 
     models.User.findOne({ where: { email: email } }).then((user) => {
-        if (!user) {
-            res.send("Email Or Password Wrong!");
-        }
-        else if (!user.validPassword(password)) {
+        if (!user || !user.validPassword(password)) {
             res.send("Email Or Password Wrong!");
         }
         else {
