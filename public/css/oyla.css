@@ -36,3 +36,7 @@ html {
     font-size: 80%;
   }
   
+  .avatar {
+    height: 26px;
+    widows: 26px;
+  }
