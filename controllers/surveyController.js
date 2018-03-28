@@ -1,14 +1,14 @@
 const models = require('../models');
 
-exports.showSurvey = function (req, res) {
+exports.showSurveyGet = function (req, res) {
     res.render('pages/showSurvey');
 }
 
-exports.newSurvey = function (req, res) {
+exports.createSurveyGet = function (req, res) {
     res.render('pages/newSurvey');
 }
 
-exports.createSurvey = function (req, res) {
+exports.createSurveyPost = function (req, res) {
     const { survey } = req.body;
 
     models.Survey.create(survey).then((survey) => {

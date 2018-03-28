@@ -2,8 +2,8 @@ const express = require('express');
 const surveyRouter = express.Router();
 const surveyController = require('../controllers/surveyController.js');
 
-surveyRouter.get('/create', surveyController.newSurvey);
-surveyRouter.post('/create', surveyController.createSurvey);
-surveyRouter.get('/:surveyId', surveyController.showSurvey);
+surveyRouter.get('/create', surveyController.createSurveyGet);
+surveyRouter.post('/create', surveyController.createSurveyPost);
+surveyRouter.get('/:surveyId', surveyController.showSurveyGet);
 
 module.exports = surveyRouter;
