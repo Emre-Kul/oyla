@@ -52,9 +52,3 @@ exports.registerPost = function (req, res) {
     });
 
 }
-
-exports.logoutGet = function (req, res) {
-    req.session.destroy();
-    res.redirect('/');
-    //res.render('pages/logout');//buggy
-}

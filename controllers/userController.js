@@ -42,4 +42,11 @@ exports.userProfilePost = function (req, res) {
         res.send(err.errors[0].message);
     });
 }
+
+exports.logoutGet = function (req, res) {
+    req.session.destroy();
+    res.redirect('/');
+    //res.render('pages/logout');//buggy
+}
+
 //So much repeated code.
