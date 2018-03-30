@@ -1,14 +1,5 @@
 const models = require('../models/');
 
-exports.authControl = function (req, res, next) {
-    if (req.session.user) {
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}
-
 exports.loginGet = function (req, res) {
     res.render('pages/login');
 }

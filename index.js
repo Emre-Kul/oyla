@@ -22,7 +22,7 @@ app.use(session({
     }
 }));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.locals.session = req.session.user;
     next();
 });
@@ -30,8 +30,25 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index.js'));
-app.use('/auth', require('./routes/auth.js'));
-app.use('/user', require('./routes/user.js'));
+
+app.use('/auth', function (req, res, next) {
+    if (req.session.user) {
+        res.redirect('/');
+    }
+    else {
+        next();
+    }
+}, require('./routes/auth.js'));
+
+app.use('/user', function (req, res, next) {
+    if (!req.session.user) {
+        res.redirect('/');
+    }
+    else {
+        next();
+    }
+}, require('./routes/user.js'));
+
 app.use('/survey', require('./routes/survey.js'));
 
 models.sequelize.sync().then(function () {
