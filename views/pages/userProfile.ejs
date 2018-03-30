@@ -45,8 +45,8 @@
                 <div class="col-sm-10">
                     <select id="sex" name="sex" class="form-control">
                         <option>Unspecified</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option <%= (userProfile.sex === 'male') ? 'selected' : '' %>>Male</option>
+                        <option <%= (userProfile.sex === 'female') ? 'selected' : '' %>>Female</option>
                     </select>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                 <div class="col-sm-10">
                     <select id="degree" name="degree" class="form-control">
                         <option>Unspecified</option>
-                        <option>Bachelor</option>
-                        <option>Master</option>
-                        <option>Doctoral</option>
+                        <option <%= (userProfile.degree === 'bachelor') ? 'selected' : '' %> >Bachelor</option>
+                        <option <%= (userProfile.degree === 'master') ? 'selected' : '' %> >Master</option>
+                        <option <%= (userProfile.degree === 'doctoral') ? 'selected' : '' %> >Doctoral</option>
                     </select>
                 </div>
             </div>
