@@ -48,10 +48,18 @@ exports.registerPost = function (req, res) {
     }
 
     models.User.create({ username: username, password: password, email: email, token: 'NONE' }).then((user) => {
-        res.redirect('/');
+        models.UserProfile.create({user_id : user.id,income : 0}).
+            then((userProfile) => {
+                req.session.user = user.dataValues;
+                res.redirect('/');
+            }).
+            catch((err) => {
+                res.status(404).send(err.errors[0].message);//this is not good find a better way
+            });
     }).catch((err) => {
         res.status(404).send(err.errors[0].message);
     });
+
 }
 
 exports.logoutGet = function (req, res) {

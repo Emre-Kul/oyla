@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var UserProfile = sequelize.define('UserProfile', {
+    fullname : DataTypes.STRING,
     birthday: DataTypes.DATE,
     sex: DataTypes.ENUM(
       'male',
