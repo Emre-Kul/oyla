@@ -1,7 +1,6 @@
 const models = require('../models');
 
 exports.userProfileGet = function (req, res) {
-    let userProfileData;
     models.UserProfile.findOne({ user_id: req.session.user.id }).then((userProfile) => {
         res.render('pages/userProfile', {
             userProfile: userProfile.dataValues
@@ -16,20 +15,31 @@ exports.userProfilePost = function (req, res) {
     const { fullname, income, sex, degree } = req.body;
     models.UserProfile.update(
         {
-            fullname : fullname,
-            income : income,
-            sex : sex,
-            degree : degree
+            fullname: fullname,
+            income: income,
+            sex: sex,
+            degree: degree
         },
         {
-            where : {
-                user_id : req.session.user.id
+            where: {
+                user_id: req.session.user.id
             }
         }
     ).then((result) => {
-        res.redirect('/user/profile');
+        models.UserProfile.findOne({ user_id: req.session.user.id }).then((userProfile) => {
+            res.render('pages/userProfile', {
+                userProfile: userProfile.dataValues,
+                notification: {
+                    type: 'success',
+                    text: 'Profile succesfully updated'
+                }
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.send("Some Error Accured");
+        });
     }).catch((err) => {
         res.send(err.errors[0].message);
     });
-    
 }
+//So much repeated code.

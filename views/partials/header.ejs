@@ -37,3 +37,14 @@
         </div>
     </nav>
 </header>
+<% if(typeof notification !== 'undefined') { %>
+<script>
+    new Noty({
+        theme : 'sunset',
+        layout: 'topRight',
+        timeout: 2000,
+        type: '<%= notification.type %>',//notification.type
+        text: '<%= notification.text %>'//notification.text
+    }).show();
+</script>
+<% } %>
