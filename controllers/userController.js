@@ -44,7 +44,23 @@ exports.userProfilePost = function (req, res) {
 }
 
 exports.userSurveyGet = function (req, res) {
-    res.render('pages/userSurvey');
+    models.Survey.findAll({ where: { user_id: req.session.user.id } }).
+        then((surveys) => {
+            console.log(surveys);
+            if (surveys) {
+                let surveyList = surveys.map((survey) => {
+                    return survey.dataValues;
+                });
+                console.log(surveyList);
+                res.render('pages/userSurvey', { surveys: surveyList });
+            }
+            else
+                res.render('pages/userSurvey', { surveys: [] });
+        }).
+        catch((err) => {
+            res.send("ERROR")
+            console.log(err);
+        });
 }
 
 exports.userSurveyPost = function (req, res) {

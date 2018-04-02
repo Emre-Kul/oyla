@@ -11,13 +11,14 @@
     <% include ../partials/header.ejs %>
 
     <main role="main" class="container">
-        <%  var surveyIter; 
-            for(surveyIter = 0;surveyIter < 10;surveyIter++){ 
-        %>
+        <%  for(survey of surveys){ %>
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white">Survey <%= surveyIter+1 %> Title</div>
-            <div class="card-body bg-primary text-white">Survey <%= surveyIter+1 %> Content</div>
-            <div class="card-footer">Created At : xx/xx/xxxx xx:xx</div>
+            <div class="card-header bg-dark text-white"><%= survey.title %></div>
+            <div class="card-body bg-primary text-white"><%= survey.description %></div>
+            <div class="card-footer">
+                <span>Created At : <%= survey.created_at %></span>
+                <span>Updated At : <%= survey.updated_at %></span>
+            </div>
         </div>
         <% } %>    
     </main>
