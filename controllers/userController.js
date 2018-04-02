@@ -43,6 +43,14 @@ exports.userProfilePost = function (req, res) {
     });
 }
 
+exports.userSurveyGet = function (req, res) {
+    res.render('pages/userSurvey');
+}
+
+exports.userSurveyPost = function (req, res) {
+    res.render('pages/userSurvey');
+}
+
 exports.logoutGet = function (req, res) {
     req.session.destroy();
     res.redirect('/');

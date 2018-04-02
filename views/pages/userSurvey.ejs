@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+    <title>Oyla</title>
+</head>
+
+<body>
+    <% var page = 'userSurvey' %>
+    <% include ../partials/header.ejs %>
+
+    <main role="main" class="container">
+        <%  var surveyIter; 
+            for(surveyIter = 0;surveyIter < 10;surveyIter++){ 
+        %>
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">Survey <%= surveyIter+1 %> Title</div>
+            <div class="card-body bg-primary text-white">Survey <%= surveyIter+1 %> Content</div>
+            <div class="card-footer">Created At : xx/xx/xxxx xx:xx</div>
+        </div>
+        <% } %>    
+    </main>
+    
+    <% include ../partials/footer.ejs %>
+
+</body>
+
+</html>
