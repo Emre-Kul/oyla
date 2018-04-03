@@ -3,6 +3,7 @@
 
 <head>
     <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="/css/survey.css">
     <title>Oyla</title>
 </head>
 
@@ -17,11 +18,26 @@
                 <p class="lead">You can get to know thoughts of the people by adding different questions.</p>
                 <hr class="my-4">
                 <form id="new-survey" method="POST">
-                    <div class="form-group">
-                        <label for="inputTitle">Survey Title</label>
-                        <input type="email" class="form-control" id="inputTitle" name="title" aria-describedby="titleHelp" placeholder="Enter title">
+                  <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputTitle" placeholder="Title" required>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Create the survey</button>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="inputDescription" rows="3" placeholder="Description" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h4>Questions</h4>
+                    <hr class="my-1">
+                    <div id="questions">
+                      <p>There is no questions.</p>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary float-right">Create the survey</button>
                 </form>
             </div>
             <div class="col-sm-4">
