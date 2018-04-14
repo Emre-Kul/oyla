@@ -61,10 +61,10 @@
                         <div id="add-question" class="card-body">
                             <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="textBox">Text Box</button>
                             <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="checkBox">Check Box</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="multipleChoices">Multiple Choices</a>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="dropdownList">Dropdown List</a>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="rating">Rating</a>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="sorting">Sorting</a>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="multipleChoices">Multiple Choices</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="dropdownList">Dropdown List</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="rating">Rating</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="sorting">Sorting</button>
                         </div>
                 </div>
             </div>
@@ -84,12 +84,29 @@
             <div class="modal-body">
                 <form>
                 <div class="form-group">
-                    <label for="question-text" class="col-form-label">Question:</label>
+                    <label for="question-text" class="col-form-label">Question Text:</label>
                     <input type="text" class="form-control" id="question-text">
                 </div>
-                <div class="form-group">
-                    <label for="restriction-text" class="col-form-label">Restriction:</label>
-                    <textarea class="form-control" id="restriction-text"></textarea>
+                <div id="question-restriction" class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="min-length">Min. Length:</label>
+                        <input type="number" class="form-control" id="min-length" min="0" max="255" value="0">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="max-length">Max. Length:</label>
+                        <input type="number" class="form-control" id="max-length" min="0" max="255" value="255">
+                    </div>
+                </div>
+                <div id="question-options" class="form-group">
+                    <h6>Options</h6>
+                    <hr class="my-1">
+                    <div id="options">
+                        <input type="text" class="option form-control" placeholder="Option 1" required>
+                        <input type="text" class="option form-control" placeholder="Option 2" required>
+                    </div>
+                    <div class="float-right">
+                        <span class="badge badge-dark option-add">Add Option</span>
+                    </div>
                 </div>
                 </form>
             </div>
@@ -108,6 +125,15 @@
         $(function() {
             $('#example').barrating({
                 theme: 'fontawesome-stars'
+            });
+
+            $('#addQuestionModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var type = button.data('question-type')
+                var type_name = button.text()
+                var modal = $(this)
+                modal.find('.modal-title').text(type_name)
+                //modal.find('.modal-body input').val(type)
             });
         });
     </script>     

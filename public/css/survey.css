@@ -5,3 +5,7 @@
 #add-question button:hover {
     border: 1px solid black;
 }
+
+#options input {
+    margin-bottom: 6px
+}
