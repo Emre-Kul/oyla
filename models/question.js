@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.ENUM(
-        'text_box',
-        'multiple_choice',
-        'voting',
-        'check_box',
-        'list',
+        'textBox',
+        'checkBox',
+        'multipleChoices',
+        'dropdownList',
+        'rating',
         'sorting'
       ),
       allowNull: false
