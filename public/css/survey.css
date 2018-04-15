@@ -2,6 +2,10 @@
     cursor: pointer;
 }
 
+.question {
+    margin-bottom: 6px
+}
+
 #add-question button:hover {
     border: 1px solid black;
 }

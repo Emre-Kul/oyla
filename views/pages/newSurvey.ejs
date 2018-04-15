@@ -34,20 +34,7 @@
                     <h4>Questions</h4>
                     <hr class="my-1">
                     <div id="questions">
-                      <p class="text-muted">There is no questions.</p>
-                      <div class="question card">
-                        <div class="card-body">
-                            <h5 class="card-title">Question</h5>
-                            <p class="card-text">Options</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Text Box</small>
-                            <div class="float-right">
-                                <span class="badge badge-primary question-edit">Edit</span>
-                                <span class="badge badge-danger question-remove">Remove</span>
-                            </div>
-                        </div>
-                      </div>
+                      <p id="no-questions" class="text-muted">There is no questions.</p>
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary float-right">Create the survey</button>
@@ -127,7 +114,13 @@
                 theme: 'fontawesome-stars'
             });
 
+            function getOption(number_of_options) {
+                return '<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'" required>'
+            }
+
             $('#addQuestionModal').on('show.bs.modal', function (event) {
+                event.stopPropagation()
+                var number_of_options = 0;
                 var button = $(event.relatedTarget)
                 var type = button.data('question-type')
                 var type_name = button.text()
@@ -143,19 +136,40 @@
                     modal.find('#question-options').hide();
                     modal.find('#question-restrictions').show();
                 } else {
+                    var options = modal.find('#options')
+                    options.html(getOption(++number_of_options))
+                    options.append(getOption(++number_of_options))
                     modal.find('.option-add').click(function() {
-                        var options = modal.find('#options')
-                        var number_of_options = options.find('.option').length + 1
-                        options.append('<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'" required>')
+                        options.append(getOption(++number_of_options))
                     })
 
                     modal.find('#question-options').show();
                     modal.find('#question-restrictions').hide();
                 }
 
-                modal.find('#question-add-button').click(function() {
+                modal.find('#question-add-button').unbind('click').click(function() {
                     //TODO: Check whether values are valid
-                    //TODO: Add question and scroll down
+
+                    var questions = $('#questions');
+                    if(questions.has('p#no-questions').length)
+                        questions.html('')
+
+                    var question = '<div class="question card">'
+                        + '<div class="card-body">'
+                        + '<h5 class="card-title">' + modal.find('input#question-text').val() + '</h5>'
+                        + '<p class="card-text">Options</p>'
+                        + '</div>'
+                        + '<div class="card-footer">'
+                        + '<small class="text-muted">' + type_name + '</small>'
+                        + '<div class="float-right">'
+                        + '<span class="badge badge-primary question-edit">Edit</span> '
+                        + '<span class="badge badge-danger question-remove">Remove</span>'
+                        + '</div></div></div>';
+
+                    questions.append(question)
+                    modal.modal('hide')
+                    var page = $('html, body')
+                    page.animate({ scrollTop: page.height()  }, 500)
                 });
 
                 modal.find('#question-text').trigger('focus')
