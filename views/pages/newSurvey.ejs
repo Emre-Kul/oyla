@@ -68,8 +68,8 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form id="question-form">
             <div class="modal-body">
-                <form>
                 <div class="form-group">
                     <label for="question-text" class="col-form-label">Question Text:</label>
                     <input type="text" class="form-control" id="question-text" required>
@@ -95,12 +95,12 @@
                         <span class="badge badge-dark option-add">Add Option</span>
                     </div>
                 </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="question-add-button">Add question</button>
+                <button type="submit" class="btn btn-primary">Add question</button>
             </div>
+            </form>
             </div>
         </div>
     </div>
@@ -133,7 +133,7 @@
                     modal.find('#min-length').val(0)
                     modal.find('#max-length').val(255)
 
-                    modal.find('#question-options').hide();
+                    modal.find('#question-options').html('').hide();
                     modal.find('#question-restrictions').show();
                 } else {
                     var options = modal.find('#options')
@@ -147,7 +147,8 @@
                     modal.find('#question-restrictions').hide();
                 }
 
-                modal.find('#question-add-button').unbind('click').click(function() {
+                modal.find('#question-form').submit(function(event) {
+                    event.preventDefault()
                     //TODO: Check whether values are valid
 
                     var questions = $('#questions');
