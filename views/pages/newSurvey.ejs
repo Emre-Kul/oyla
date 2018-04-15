@@ -85,9 +85,9 @@
                 <form>
                 <div class="form-group">
                     <label for="question-text" class="col-form-label">Question Text:</label>
-                    <input type="text" class="form-control" id="question-text">
+                    <input type="text" class="form-control" id="question-text" required>
                 </div>
-                <div id="question-restriction" class="form-row">
+                <div id="question-restrictions" class="form-row">
                     <div class="form-group col-md-3">
                         <label for="min-length">Min. Length:</label>
                         <input type="number" class="form-control" id="min-length" min="0" max="255" value="0">
@@ -112,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add question</button>
+                <button type="button" class="btn btn-primary" id="question-add-button">Add question</button>
             </div>
             </div>
         </div>
@@ -133,7 +133,32 @@
                 var type_name = button.text()
                 var modal = $(this)
                 modal.find('.modal-title').text(type_name)
-                //modal.find('.modal-body input').val(type)
+
+                modal.find('input').val('')
+
+                if(type == 'textBox' || type == 'rating') {
+                    modal.find('#min-length').val(0)
+                    modal.find('#max-length').val(255)
+
+                    modal.find('#question-options').hide();
+                    modal.find('#question-restrictions').show();
+                } else {
+                    modal.find('.option-add').click(function() {
+                        var options = modal.find('#options')
+                        var number_of_options = options.find('.option').length + 1
+                        options.append('<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'" required>')
+                    })
+
+                    modal.find('#question-options').show();
+                    modal.find('#question-restrictions').hide();
+                }
+
+                modal.find('#question-add-button').click(function() {
+                    //TODO: Check whether values are valid
+                    //TODO: Add question and scroll down
+                });
+
+                modal.find('#question-text').trigger('focus')
             });
         });
     </script>     
