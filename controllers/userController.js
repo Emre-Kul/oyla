@@ -1,7 +1,9 @@
 const models = require('../models');
 
 exports.userProfileGet = function (req, res) {
-    models.UserProfile.findOne({ user_id: req.session.user.id }).then((userProfile) => {
+    console.log(req.session.user);
+    models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
+        console.log(userProfile);
         res.render('pages/userProfile', {
             userProfile: userProfile.dataValues
         });
@@ -26,7 +28,7 @@ exports.userProfilePost = function (req, res) {
             }
         }
     ).then((result) => {
-        models.UserProfile.findOne({ user_id: req.session.user.id }).then((userProfile) => {
+        models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
             res.render('pages/userProfile', {
                 userProfile: userProfile.dataValues,
                 notification: {
