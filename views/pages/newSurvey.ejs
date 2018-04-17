@@ -159,7 +159,10 @@
                 modal.find('#question-form').submit(function(event) {
                     event.preventDefault()
                     event.stopImmediatePropagation()
-                    //TODO: Check whether values are valid
+                    if((type == 'textBox' || type == 'rating') && modal.find('#min-length').val() > modal.find('#max-length').val()) {
+                        modal.find('#min-length').trigger('focus')
+                        return;
+                    }
 
                     var questions = $('#questions');
                     if(questions.has('p#no-questions').length)
