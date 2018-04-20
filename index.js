@@ -50,7 +50,7 @@ app.use('/user', function (req, res, next) {
 }, require('./routes/user.js'));
 
 app.use('/admin', function (req, res, next) {
-    if (!req.session.user) {//will add admin control
+    if (!req.session.user && false) {//useless mw for now
         res.redirect('/');
     }
     else {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../partials/head.ejs %>
+    <title>Oyla</title>
+</head>
+
+<body>
+    <% var page = 'dashboard' %>
+    <% include ../../partials/header.ejs %>
+    
+    <main role="main" class="container">
+        <h1>Surveys</h1>
+           <table class="table table-inverse">
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>Survey Name</th>
+                <th>Survey Creator</th>
+                <th>Survey Desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i = 0;i < 5;i++){%>
+                <tr>
+                <th scope="row"><%= i %></th>
+                <td>SN <%= i %></td>
+                <td>SC <%= i %></td>
+                <td>SD <%= i %></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </main>
+    
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>
