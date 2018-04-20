@@ -23,12 +23,15 @@
                 </tr>
             </thead>
             <tbody>
-                <% for(let i = 0;i < 5;i++){%>
+                <%  let i,survey;
+                    for(i = 0;i < surveys.length;i++){
+                    survey = surveys[i];
+                %>
                 <tr>
-                <th scope="row"><%= i %></th>
-                <td>SN <%= i %></td>
-                <td>SC <%= i %></td>
-                <td>SD <%= i %></td>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= survey.title %></td>
+                <td><%= survey.user_id %></td>
+                <td><%= survey.description %></td>
                 </tr>
                 <% } %>
             </tbody>
