@@ -2,7 +2,7 @@ const models = require('../models');
 
 exports.userProfileGet = function (req, res) {
     console.log(req.session.user);
-    models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
+    models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
         console.log(userProfile);
         res.render('pages/user/profile', {
             userProfile: userProfile.dataValues
@@ -28,7 +28,7 @@ exports.userProfilePost = function (req, res) {
             }
         }
     ).then((result) => {
-        models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
+        models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
             res.render('pages/user/profile', {
                 userProfile: userProfile.dataValues,
                 notification: {
@@ -67,6 +67,14 @@ exports.userSurveyGet = function (req, res) {
 
 exports.userSurveyPost = function (req, res) {
     res.render('pages/user/survey');
+}
+
+exports.userSettingGet = function (req, res) {
+    res.render('pages/user/setting');
+}
+
+exports.userSettingPost = function (req, res) {
+    res.render('pages/user/setting');
 }
 
 exports.logoutGet = function (req, res) {
