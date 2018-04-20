@@ -50,6 +50,14 @@ app.use('/user', function (req, res, next) {
 }, require('./routes/user.js'));
 
 app.use('/survey', require('./routes/survey.js'));
+app.use('/admin', function (req, res, next) {
+    if(!req.session.user){//will add admin control
+        res.redirect('/');    
+    }
+    else{
+        next();
+    }
+}, require('./routes/admin.js'));
 
 models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
