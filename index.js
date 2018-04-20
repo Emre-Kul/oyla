@@ -50,6 +50,7 @@ app.use('/user', function (req, res, next) {
 }, require('./routes/user.js'));
 
 app.use('/survey', require('./routes/survey.js'));
+app.use('/admin', require('./routes/admin.js'));
 
 models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
