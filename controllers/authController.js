@@ -1,7 +1,7 @@
 const models = require('../models/');
 
 exports.loginGet = function (req, res) {
-    res.render('pages/login');
+    res.render('pages/auth/login');
 }
 
 exports.loginPost = function (req, res) {
@@ -22,7 +22,7 @@ exports.loginPost = function (req, res) {
 }
 
 exports.registerGet = function (req, res) {
-    res.render('pages/register');
+    res.render('pages/auth/register');
 }
 
 exports.registerPost = function (req, res) {
