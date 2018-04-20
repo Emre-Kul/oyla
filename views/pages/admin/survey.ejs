@@ -20,6 +20,7 @@
                 <th>Survey Name</th>
                 <th>Survey Creator</th>
                 <th>Survey Desc</th>
+                <th>--------</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,10 +29,14 @@
                     survey = surveys[i];
                 %>
                 <tr>
-                <th scope="row"><%= i+1 %></th>
-                <td><%= survey.title %></td>
-                <td><%= survey.user_id %></td>
-                <td><%= survey.description %></td>
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= survey.title %></td>
+                    <td><%= survey.user_id %></td>
+                    <td><%= survey.description %></td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </td>
                 </tr>
                 <% } %>
             </tbody>

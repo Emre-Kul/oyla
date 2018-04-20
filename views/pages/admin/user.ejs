@@ -19,6 +19,7 @@
                 <th>#</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>--------</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,11 @@
                 <th scope="row"><%= i+1 %></th>
                 <td><%= user.username%></td>
                 <td><%= user.email %><td>
+                <td>
+                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-ban"></i>
+                    <i class="fas fa-trash"></i>
+                </td>
                 </tr>
                 <% } %>
             </tbody>

@@ -15,11 +15,9 @@ exports.userGet = function (req, res) {
 
 exports.surveyGet = function (req, res) {
     models.Survey.findAll().then((surveys) => {
-        
         let surveyValues = surveys.map((survey) =>{
             return survey.dataValues;
         });
-
         res.render('pages/admin/survey', { surveys: surveyValues });
     }).catch(e => console.log(e));
 }
