@@ -4,7 +4,7 @@ exports.userProfileGet = function (req, res) {
     console.log(req.session.user);
     models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
         console.log(userProfile);
-        res.render('pages/userProfile', {
+        res.render('pages/user/userProfile', {
             userProfile: userProfile.dataValues
         });
     }).catch((err) => {
@@ -29,7 +29,7 @@ exports.userProfilePost = function (req, res) {
         }
     ).then((result) => {
         models.UserProfile.findOne({where : { user_id: req.session.user.id }}).then((userProfile) => {
-            res.render('pages/userProfile', {
+            res.render('pages/user/userProfile', {
                 userProfile: userProfile.dataValues,
                 notification: {
                     type: 'success',
@@ -54,10 +54,10 @@ exports.userSurveyGet = function (req, res) {
                     return survey.dataValues;
                 });
                 console.log(surveyList);
-                res.render('pages/userSurvey', { surveys: surveyList });
+                res.render('pages/user/userSurvey', { surveys: surveyList });
             }
             else
-                res.render('pages/userSurvey', { surveys: [] });
+                res.render('pages/user/userSurvey', { surveys: [] });
         }).
         catch((err) => {
             res.send("ERROR")
@@ -66,7 +66,7 @@ exports.userSurveyGet = function (req, res) {
 }
 
 exports.userSurveyPost = function (req, res) {
-    res.render('pages/userSurvey');
+    res.render('pages/user/userSurvey');
 }
 
 exports.logoutGet = function (req, res) {

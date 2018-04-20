@@ -2,33 +2,23 @@
 <html lang="en">
 
 <head>
-    <% include ../partials/head.ejs %>
-    <title>Register | Oyla</title>
+    <% include ../../partials/head.ejs %>
+    <title>Login | Oyla</title>
 </head>
 
 <body>
-    <% var page = 'register' %>
-    <% include ../partials/header.ejs %>
+    <% var page = 'login' %>
+    <% include ../../partials/header.ejs %>
 
     <main role="main" class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card text-center">
                     <div class="card-header">
-                        Register
+                        Login
                     </div>
                     <div class="card-body">
                         <form method="POST">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="username" 
-                                       name="username" 
-                                       placeholder="Username" 
-                                       required="required"
-                                       maxlength="50"/> 
-                            </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" 
@@ -46,19 +36,13 @@
                                        name="password" 
                                        class="form-control" 
                                        required="required" 
-                                       maxlength="50"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="re-password">Re-Password</label>
-                                <input type="password" 
-                                       id="repassword" 
-                                       name="repassword" 
-                                       class="form-control" 
-                                       required="required" 
-                                       maxlength="50"/>
+                                       maxlength="50" />
                             </div>
                             <div class="from-group">
-                                <button type="submit" class="btn btn-primary btn-block" id="submit" >Register</button>
+                                <button type="submit" 
+                                        class="btn btn-primary btn-block" 
+                                        id="submit" 
+                                        name="login-submit">LogIn</button>
                             </div>
                         </form>
                     </div>
@@ -67,11 +51,10 @@
         </div>
     </main> 
 
-    <% include ../partials/footer.ejs %>
+    <% include ../../partials/footer.ejs %>
     
     <!-- SPECIAL SCRIPTS -->
     <script src="/js/authControl.js"></script>
-    
 </body>
 
 </html>

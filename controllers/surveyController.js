@@ -1,11 +1,11 @@
 const models = require('../models');
 
 exports.showSurveyGet = function (req, res) {
-    res.render('pages/showSurvey');
+    res.render('pages/survey/showSurvey');
 }
 
 exports.createSurveyGet = function (req, res) {
-    res.render('pages/newSurvey');
+    res.render('pages/survey/newSurvey');
 }
 
 exports.createSurveyPost = function (req, res) {
