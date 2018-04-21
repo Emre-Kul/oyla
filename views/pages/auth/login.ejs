@@ -17,6 +17,11 @@
                         Login
                     </div>
                     <div class="card-body">
+                        <% if(typeof loginFailed != 'undefined') { %>
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Incorrect</strong> username or password !
+                              </div>
+                        <% } %>
                         <form method="POST">
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -41,7 +46,7 @@
                                 <button type="submit" 
                                         class="btn btn-primary btn-block" 
                                         id="submit" 
-                                        name="login-submit">LogIn</button>
+                                        name="login-submit">Login</button>
                             </div>
                         </form>
                     </div>
