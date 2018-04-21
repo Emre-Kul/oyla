@@ -1,5 +1,5 @@
 //dependent to urlParamHelper.js
-var createPaginationBar = function (pageCount = 20) {
+var createPaginationBar = function (pageCount) {
     var PAGE_LISTING_LIMIT = 5;
     var i, url;
     var params = getParamsFromUrl();
