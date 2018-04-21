@@ -1,7 +1,7 @@
 const models = require('../models/');
 const Op = require('sequelize').Op;
 
-const SQL_LIMIT = 2;
+const SQL_LIMIT = 1;
 
 exports.dashboardGet = function (req, res) {
     res.render('pages/admin/dashboard');
@@ -26,7 +26,7 @@ exports.userGet = function (req, res) {
         let userValues = users.map((user) => {
             return user.dataValues;
         })
-        res.render('pages/admin/user', { users: userValues });
+        res.render('pages/admin/user', { users: userValues, pagination: { pageCount: 10 } });//will calculate page count
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
@@ -51,7 +51,7 @@ exports.surveyGet = function (req, res) {
         let surveyValues = surveys.map((survey) => {
             return survey.dataValues;
         });
-        res.render('pages/admin/survey', { surveys: surveyValues });
+        res.render('pages/admin/survey', { surveys: surveyValues, pagination: { pageCount: 10 } });//will calculate page count
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
