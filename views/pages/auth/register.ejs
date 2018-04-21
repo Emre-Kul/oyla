@@ -17,6 +17,24 @@
                         Register
                     </div>
                     <div class="card-body">
+                        <% if(typeof isError !== 'undefined') { %>
+                            <% if(typeof samePassword !== 'undefined') { %>
+                                <% var strong="Passwords " %>
+                                <% var msg="are not same !" %>                                
+                            <% } else if(typeof passwordLength !== 'undefined') { %>
+                                <% var strong="Password " %>
+                                <% var msg="must be between 4 and 10" %>
+                            <% } else if(typeof usernameValid !== 'undefined') { %>
+                                <% var strong="Username " %>
+                                <% var msg="has been already taken !" %>
+                            <% } else if(typeof emailValid !== 'undefined') { %>
+                                <% var strong="Email " %>
+                                <% var msg="has been already taken !" %>
+                            <% } %>                                
+                            <div class="alert alert-danger" role="alert">
+                                <strong><%= strong %></strong><%= msg %>
+                            </div>
+                        <% } %>
                         <form method="POST">
                             <div class="form-group">
                                 <label for="username">Username</label>
