@@ -1,19 +1,52 @@
+<!-- PAGINATION START -->
+<script>
+    //paggination
+    $(document).ready(function () {
+        var loc = document.location;
+        var pagination = {
+            list_count: 1,
+            current: 1,
+            page_count: 2,
+            url_prefix: loc.origin + loc.pathname
+        }
+
+        var getParamsFromUrl = function () {
+            var paramArray = loc.search.substring(1).split('&');
+            var i, params = {};
+            if (paramArray[0] === "") {
+                return {};
+            }
+            for (i = 0; i < paramArray.length; i++) {
+                params[paramArray[i].split('=')[0]] = paramArray[i].split('=')[1];
+            }
+            return params;
+        }
+        var setUrlFromParams = function () {
+
+        }
+        console.log(getParamsFromUrl());
+    });
+
+</script>
+
 <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
         <span class="sr-only">Previous</span>
       </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
         <span class="sr-only">Next</span>
       </a>
-    </li>
-  </ul>
+        </li>
+    </ul>
 </nav>
+
+<!-- PAGINATION END -->
