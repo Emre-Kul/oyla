@@ -17,9 +17,9 @@
                         Login
                     </div>
                     <div class="card-body">
-                        <% if(typeof loginFailed !== 'undefined') { %>
+                        <% if(typeof error !== 'undefined') { %>
                             <div class="alert alert-danger" role="alert">
-                                <strong>Incorrect</strong> username or password !
+                                <%= error.message %>
                               </div>
                         <% } %>
                         <form method="POST">
