@@ -9,7 +9,7 @@ exports.loginPost = function (req, res) {
 
     models.User.findOne({ where: { email: email } }).then((user) => {
         if (!user || !user.validPassword(password)) {
-            res.send("Email Or Password Wrong!");
+            res.render('pages/auth/login',{error:{message: "Invalid username or password"}});
         }
         else {
             req.session.user = user.dataValues;
@@ -28,13 +28,33 @@ exports.registerGet = function (req, res) {
 exports.registerPost = function (req, res) {
     const { username, email, password, repassword } = req.body;
 
+    models.User.findOne({ where: { email: email } }).then((user) => {
+        if (user != null && email === user.email) {
+            res.render('pages/auth/register',{error: {message: "Email has been already taken !"}});
+            return;
+        }
+    }).catch((err) => {
+        res.status(404).send("Error Accured!");
+        console.log(err);
+    });    
+
+    models.User.findOne({ where: { username: username } }).then((user) => {
+        if (user != null && username === user.username) {
+            res.render('pages/auth/register',{error: {message: "Username has been already taken !"}});
+            return;
+        }
+    }).catch((err) => {
+        res.status(404).send("Error Accured!");
+        console.log(err);
+    });
+
     if (password !== repassword) {
-        res.send("Passwords Not Same!");
+        res.render('pages/auth/register',{error: {message: "Passwords are not same !"}});
         return;
     }
 
     if (password.length > 10 || password.length < 4) {//i will delete this magic numbers
-        res.send("Password must be beetween 4 and 10");
+        res.render('pages/auth/register',{error: {message: "Password must be between 4 and 10", code: "002"}});
         return;
     }
 
