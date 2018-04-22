@@ -9,8 +9,12 @@
 <body>
     <% include ../../partials/header.ejs %>
     <main role="main" class="container">
-        <% include ../../partials/adminTopMenu.ejs %>
-        Dashboard
+        <div class="row">
+            <% include ../../partials/adminSideBar.ejs %>
+            <div class="col col-9">
+                Dashboard
+            </div>
+        </div>
     </main>
     
     <% include ../../partials/footer.ejs %>
