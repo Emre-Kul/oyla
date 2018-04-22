@@ -1,7 +1,7 @@
 const models = require('../models/');
 const Op = require('sequelize').Op;
 
-const SQL_LIMIT = 1;
+const SQL_LIMIT = 2;
 
 exports.dashboardGet = function (req, res) {
     res.render('pages/admin/dashboard');
@@ -12,7 +12,7 @@ exports.userGet = function (req, res) {
     search = (typeof search === 'undefined') ? '%' : `%${search}%`;
     page = (typeof page === 'undefined') ? 0 : parseInt(page);
 
-    models.User.findAll(
+    models.User.findAndCountAll(
         {
             where: {
                 username: {
@@ -23,10 +23,10 @@ exports.userGet = function (req, res) {
             limit: SQL_LIMIT
         }
     ).then((users) => {
-        let userValues = users.map((user) => {
+        let userValues = users.rows.map((user) => {
             return user.dataValues;
         })
-        res.render('pages/admin/user', { users: userValues, pagination: { pageCount: 10 } });//will calculate page count
+        res.render('pages/admin/user', { users: userValues, pagination: { pageCount: Math.ceil(users.count/SQL_LIMIT) } });
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
@@ -37,7 +37,7 @@ exports.surveyGet = function (req, res) {
     let { search, page } = req.query;
     search = (typeof search === 'undefined') ? '%' : `%${search}%`;
     page = (typeof page === 'undefined') ? 0 : parseInt(page);
-    models.Survey.findAll(
+    models.Survey.findAndCountAll(
         {
             where: {
                 title: {
@@ -48,10 +48,10 @@ exports.surveyGet = function (req, res) {
             limit: SQL_LIMIT
         }
     ).then((surveys) => {
-        let surveyValues = surveys.map((survey) => {
+        let surveyValues = surveys.rows.map((survey) => {
             return survey.dataValues;
         });
-        res.render('pages/admin/survey', { surveys: surveyValues, pagination: { pageCount: 10 } });//will calculate page count
+        res.render('pages/admin/survey', { surveys: surveyValues, pagination: { pageCount: Math.ceil(surveys.count/SQL_LIMIT) } });//will calculate page count
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
