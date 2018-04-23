@@ -6,6 +6,8 @@ const session = require('express-session');
 const models = require('./models');
 const app = express();
 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +19,9 @@ app.use(session({
     secret: 'random',
     resave: false,
     saveUninitialized: true,
+    store: new SequelizeStore({
+        db: models.sequelize
+    }),
     cookie: {
         expires: 600000
     }
