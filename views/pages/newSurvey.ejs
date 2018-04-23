@@ -171,7 +171,37 @@
                     var question = '<div class="question card">'
                         + '<div class="card-body">'
                         + '<h5 class="card-title">' + modal.find('input#question-text').val() + '</h5>'
-                        + '<p class="card-text">Options</p>'
+                        + '<p class="card-text">';
+
+                    switch(type) {
+                        case 'textBox':
+                            question += 'TextBox';
+                            break;
+
+                        case 'checkBox':
+                            question += 'CheckBox';
+                            break;
+
+                        case 'multipleChoices':
+                            question += 'multipleChoices';
+                            break;
+
+                        case 'dropdownList':
+                            question += 'dropdownList';
+                            break;
+
+                        case 'rating':
+                            question += 'rating';
+                            break;
+
+                        case 'sorting':
+                            question += 'sorting';
+                            break;
+                        
+                        default:
+                    }
+
+                    question += '</p>'
                         + '</div>'
                         + '<div class="card-footer">'
                         + '<small class="text-muted">' + type_name + '</small>'
