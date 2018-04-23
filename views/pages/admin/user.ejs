@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../partials/head.ejs %>
+    <title>Oyla</title>
+</head>
+
+<body>
+    <% include ../../partials/header.ejs %>
+    <main role="main" class="container">
+         <div class="row">
+            <% include ../../partials/adminSideBar.ejs %>
+            <div class="col col-9">
+                <% include ../../partials/searchBar.ejs %>
+                <h1>Users</h1>
+                <table class="table table-inverse">
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>--------</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  let i,user;
+                            for(i = 0;i < users.length;i++){
+                            user = users[i];
+                        %>
+                        <tr>
+                        <th scope="row"><%= i+1 %></th>
+                        <td><%= user.username%></td>
+                        <td><%= user.email %><td>
+                        <td>
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-ban"></i>
+                            <i class="fas fa-trash"></i>
+                        </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <% include ../../partials/paginationBar.ejs %>
+            </div>
+        </div>
+        
+    </main>
+    
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>

@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-    <% include ../partials/head.ejs %>
+    <% include ../../partials/head.ejs %>
     <title>Login | Oyla</title>
 </head>
 
 <body>
-    <% var page = 'login' %>
-    <% include ../partials/header.ejs %>
+    <% include ../../partials/header.ejs %>
 
     <main role="main" class="container mt-5">
         <div class="row">
@@ -18,6 +17,11 @@
                         Login
                     </div>
                     <div class="card-body">
+                        <% if(typeof error !== 'undefined') { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= error.message %>
+                              </div>
+                        <% } %>
                         <form method="POST">
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -42,7 +46,7 @@
                                 <button type="submit" 
                                         class="btn btn-primary btn-block" 
                                         id="submit" 
-                                        name="login-submit">LogIn</button>
+                                        name="login-submit">Login</button>
                             </div>
                         </form>
                     </div>
@@ -51,7 +55,7 @@
         </div>
     </main> 
 
-    <% include ../partials/footer.ejs %>
+    <% include ../../partials/footer.ejs %>
     
     <!-- SPECIAL SCRIPTS -->
     <script src="/js/authControl.js"></script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../partials/head.ejs %>
+    <title>Oyla</title>
+</head>
+
+<body>
+    <% include ../../partials/header.ejs %>
+    <main role="main" class="container">
+         <div class="row">
+            <% include ../../partials/adminSideBar.ejs %>
+            <div class="col col-9">
+                 <% include ../../partials/searchBar.ejs %>
+                <h1>Surveys</h1>
+                <table class="table table-inverse">
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Survey Name</th>
+                        <th>Survey Creator</th>
+                        <th>Survey Desc</th>
+                        <th>--------</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  let i,survey;
+                            for(i = 0;i < surveys.length;i++){
+                            survey = surveys[i];
+                        %>
+                        <tr>
+                            <th scope="row"><%= i+1 %></th>
+                            <td><%= survey.title %></td>
+                            <td><%= survey.user_id %></td>
+                            <td><%= survey.description %></td>
+                            <td>
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash"></i>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <% include ../../partials/paginationBar.ejs %>
+            </div>
+        </div>
+        
+    </main>
+    
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>

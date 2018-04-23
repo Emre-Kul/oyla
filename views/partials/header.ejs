@@ -10,12 +10,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
+              
                 <ul class="navbar-nav ml-auto">
                     <% if(typeof session === 'undefined') { %>
-                    <li class="nav-item <%= (page === 'login') ? 'active' : '' %>">
+                    <li class="nav-item">
                         <a class="nav-link" href="/auth/login">Login</a>
                     </li>
-                    <li class="nav-item <%= (page === 'register') ? 'active' : '' %>">
+                    <li class="nav-item">
                         <a class="nav-link" href="/auth/register">Register</a>
                     </li>
                     <% } else { %>
@@ -33,7 +34,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/user/profile">Profile</a>
                             <a class="dropdown-item" href="/user/survey">My Surveys</a>
-                            <a class="dropdown-item" href="#/user/settings">Settings</a>
+                            <a class="dropdown-item" href="/user/setting">Settings</a>
                             <a class="dropdown-item" href="/user/logout">Logout</a>
                         </div>
                     </li>

@@ -1,7 +1,7 @@
 const models = require('../models/');
 
 exports.loginGet = function (req, res) {
-    res.render('pages/login');
+    res.render('pages/auth/login');
 }
 
 exports.loginPost = function (req, res) {
@@ -9,7 +9,7 @@ exports.loginPost = function (req, res) {
 
     models.User.findOne({ where: { email: email } }).then((user) => {
         if (!user || !user.validPassword(password)) {
-            res.send("Email Or Password Wrong!");
+            res.render('pages/auth/login',{error:{message: "Invalid username or password"}});
         }
         else {
             req.session.user = user.dataValues;
@@ -22,19 +22,19 @@ exports.loginPost = function (req, res) {
 }
 
 exports.registerGet = function (req, res) {
-    res.render('pages/register');
+    res.render('pages/auth/register');
 }
 
 exports.registerPost = function (req, res) {
     const { username, email, password, repassword } = req.body;
 
     if (password !== repassword) {
-        res.send("Passwords Not Same!");
+        res.render('pages/auth/register',{error: {message: "Passwords are not same !"}});
         return;
     }
 
     if (password.length > 10 || password.length < 4) {//i will delete this magic numbers
-        res.send("Password must be beetween 4 and 10");
+        res.render('pages/auth/register',{error: {message: "Password must be between 4 and 10"}});
         return;
     }
 
@@ -48,7 +48,11 @@ exports.registerPost = function (req, res) {
                 res.status(404).send(err.errors[0].message);//this is not good find a better way
             });
     }).catch((err) => {
-        res.status(404).send(err.errors[0].message);
+        let msg = err.errors[0].path;
+        msg = msg[0].toUpperCase() + msg.substring(1);
+        msg += " has been already taken !";
+        res.render('pages/auth/register',{error: {message: msg}});
     });
+    
 
 }
