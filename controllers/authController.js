@@ -9,7 +9,7 @@ exports.loginPost = function (req, res) {
 
     models.User.findOne({ where: { email: email } }).then((user) => {
         if (!user || !user.validPassword(password)) {
-            res.render('pages/auth/login',{error:{message: "Invalid username or password"}});
+            res.render('pages/auth/login', { error: { message: "Invalid username or password" } });
         }
         else {
             req.session.user = user.dataValues;
@@ -29,17 +29,17 @@ exports.registerPost = function (req, res) {
     const { username, email, password, repassword } = req.body;
 
     if (password !== repassword) {
-        res.render('pages/auth/register',{error: {message: "Passwords are not same !"}});
+        res.render('pages/auth/register', { error: { message: "Passwords are not same !" } });
         return;
     }
 
     if (password.length > 10 || password.length < 4) {//i will delete this magic numbers
-        res.render('pages/auth/register',{error: {message: "Password must be between 4 and 10"}});
+        res.render('pages/auth/register', { error: { message: "Password must be between 4 and 10" } });
         return;
     }
 
     models.User.create({ username: username, password: password, email: email, token: 'NONE' }).then((user) => {
-        models.UserProfile.create({user_id : user.id,income : 0}).
+        models.UserProfile.create({ user_id: user.id, income: 0 }).
             then((userProfile) => {
                 req.session.user = user.dataValues;
                 res.redirect('/');
@@ -51,8 +51,6 @@ exports.registerPost = function (req, res) {
         let msg = err.errors[0].path;
         msg = msg[0].toUpperCase() + msg.substring(1);
         msg += " has been already taken !";
-        res.render('pages/auth/register',{error: {message: msg}});
+        res.render('pages/auth/register', { error: { message: msg } });
     });
-    
-
 }

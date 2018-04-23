@@ -31,33 +31,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index.js'));
 
-app.use('/auth', function (req, res, next) {
-    if (req.session.user) {
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/auth.js'));
-
-app.use('/user', function (req, res, next) {
-    if (!req.session.user) {
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/user.js'));
-
-app.use('/admin', function (req, res, next) {
-    if (!req.session.user && false) {//useless mw for now
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/admin.js'));
-
+app.use('/auth',require('./routes/auth.js'));
+app.use('/user', require('./routes/user.js'));
+app.use('/admin', require('./routes/admin.js'));
 app.use('/survey', require('./routes/survey.js'));
 app.use('/error', require('./routes/error.js'));
 

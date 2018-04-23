@@ -1,10 +1,24 @@
 const models = require('../models');
 
+exports.userProfileByIdGet = function (req, res) {
+    const { username } = req.params;
+    models.User.findOne({ where: { username: username } }).then((user) => {
+        models.UserProfile.findOne({ where: { user_id: user.dataValues.id } }).then((userProfile) => {
+            res.render('pages/user/profile', {
+                user : user.dataValues,
+                userProfile: userProfile.dataValues
+            });
+        });
+    }).catch((err) => {
+        console.log(err);
+        res.send("Some Error Accured");
+    });
+}
+
 exports.userProfileGet = function (req, res) {
-    console.log(req.session.user);
     models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
-        console.log(userProfile);
         res.render('pages/user/profile', {
+            user : req.session.user,
             userProfile: userProfile.dataValues
         });
     }).catch((err) => {
