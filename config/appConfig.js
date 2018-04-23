@@ -1,3 +1,3 @@
 module.exports = {
-    SQL_LIMIT : 1
+    SQL_LIMIT : 2
 }

@@ -9,8 +9,8 @@ exports.createSurveyGet = function (req, res) {
 }
 
 exports.createSurveyPost = function (req, res) {
-    const { survey } = req.body;
-
+    const survey = req.body;
+    survey.user_id = req.session.user.id;
     models.Survey.create(survey).then((survey) => {
         res.redirect('/');  
     }).catch((err) => {
