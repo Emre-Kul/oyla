@@ -27,39 +27,6 @@ exports.userProfileGet = function (req, res) {
     });
 }
 
-exports.userProfilePost = function (req, res) {
-    const { fullname, income, sex, degree } = req.body;
-    models.UserProfile.update(
-        {
-            fullname: fullname,
-            income: income,
-            sex: sex,
-            degree: degree
-        },
-        {
-            where: {
-                user_id: req.session.user.id
-            }
-        }
-    ).then((result) => {
-        models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
-            res.render('pages/user/setting', {
-                user : req.session.user,
-                userProfile: userProfile.dataValues,
-                notification: {
-                    type: 'success',
-                    text: 'Profile succesfully updated'
-                }
-            });
-        }).catch((err) => {
-            console.log(err);
-            res.send("Some Error Accured");
-        });
-    }).catch((err) => {
-        res.send(err.errors[0].message);
-    });
-}
-
 exports.userSurveyGet = function (req, res) {
     models.Survey.findAll({ where: { user_id: req.session.user.id } }).
         then((surveys) => {
@@ -96,7 +63,40 @@ exports.userSettingGet = function (req, res) {
     });
 }
 
-exports.userSettingPost = function (req, res) {
+exports.userSettingProfilePost = function (req, res) {
+    const { fullname, income, sex, degree } = req.body;
+    models.UserProfile.update(
+        {
+            fullname: fullname,
+            income: income,
+            sex: sex,
+            degree: degree
+        },
+        {
+            where: {
+                user_id: req.session.user.id
+            }
+        }
+    ).then((result) => {
+        models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
+            res.render('pages/user/setting', {
+                user : req.session.user,
+                userProfile: userProfile.dataValues,
+                notification: {
+                    type: 'success',
+                    text: 'Profile succesfully updated'
+                }
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.send("Some Error Accured");
+        });
+    }).catch((err) => {
+        res.send(err.errors[0].message);
+    });
+}
+
+exports.userSettingAccountPost = function (req, res) {
     res.render('pages/user/setting');
 }
 

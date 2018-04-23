@@ -8,70 +8,43 @@
 
 <body>
     <% include ../../partials/header.ejs %>
+        <script>
+            $(document).ready(function(){
+                $('#accountDiv').hide();
+                $('#profileDiv').hide();
+
+                $('#profileDiv').fadeIn("slow");
+                
+                $('#toggleProfile').click(function(){
+                    $('#accountDiv').hide();
+                    $('#profileDiv').fadeIn("slow");
+                    $('#toggleProfile').addClass("active");
+                    $('#toggleAccount').removeClass("active");
+                });
+                $('#toggleAccount').click(function(){
+                    $('#profileDiv').hide();
+                    $('#accountDiv').fadeIn("show");
+                    $('#toggleProfile').removeClass("active");
+                    $('#toggleAccount').addClass("active");
+                });
+            });
+        </script>
         <main role="main" class="container">
             <div class="row">
-                <div class="col col-3">
+                <div class="col col-3" >
                     <div class="text-center mb-3">
                         SETTINGS
                     </div>
-                    <a class="btn btn-outline-success btn-block" href="#profile">Profile</a>
-                    <a class="btn btn-outline-success btn-block" href="#account">Account</a>
+                    <button class="btn btn-outline-success btn-block active" id="toggleProfile">Profile</button>
+                    <button class="btn btn-outline-success btn-block" id="toggleAccount">Account</button>
                 </div>
                 <div class="col col-9">
-                    <form method="POST" action="/user/profile">
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Username : </label>
-                            <div class="col-sm-8">
-                                <p class="form-control-static">
-                                    <%= user.username %>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Email : </label>
-                            <div class="col-sm-8">
-                                <p class="form-control-static">
-                                    <%= user.email %>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="fullname" class="col-4 col-form-label">Full Name : </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="fullname" name="fullname" value="<%= userProfile.fullname %>" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="income" class="col-4 col-form-label">Income : </label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" id="income" name="income" value="<%= userProfile.income %>" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="sexselect" class="col-4 col-form-label">Sex :</label>
-                            <div class="col-sm-8">
-                                <select id="sex" name="sex" class="form-control">
-                                        <option>Unspecified</option>
-                                        <option <%= (userProfile.sex === 'male') ? 'selected' : '' %>>Male</option>
-                                        <option <%= (userProfile.sex === 'female') ? 'selected' : '' %>>Female</option>
-                                    </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="degreeselect" class="col-4 col-form-label">Degree :</label>
-                            <div class="col-sm-8">
-                                <select id="degree" name="degree" class="form-control">
-                                        <option>Unspecified</option>
-                                        <option <%= (userProfile.degree === 'bachelor') ? 'selected' : '' %> >Bachelor</option>
-                                        <option <%= (userProfile.degree === 'master') ? 'selected' : '' %> >Master</option>
-                                        <option <%= (userProfile.degree === 'doctoral') ? 'selected' : '' %> >Doctoral</option>
-                                    </select>
-                            </div>
-                        </div>
-                        <div class="from-group">
-                            <button type="submit" class="btn btn-primary btn-block" id="submit" name="user-profile-submit">Save Changes</button>
-                        </div>
-                    </form>
+                    <div id="profileDiv">
+                         <% include ../../partials/userSettingProfile.ejs %>
+                    </div>
+                    <div id="accountDiv">
+                        <% include ../../partials/userSettingAccount.ejs %>
+                    </div>
                 </div>
             </div>
         </main>
