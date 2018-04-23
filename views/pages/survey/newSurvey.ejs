@@ -155,9 +155,8 @@
                     hideFormGroup(modal.find('#question-restrictions'))
                 }
 
-                modal.find('#question-form').submit(function(event) {
+                modal.find('#question-form').unbind('submit').submit(function(event) {
                     event.preventDefault()
-                    event.stopImmediatePropagation()
                     if((type == 'textBox' || type == 'rating') && modal.find('#min-length').val() > modal.find('#max-length').val()) {
                         modal.find('#min-length').trigger('focus')
                         return;
