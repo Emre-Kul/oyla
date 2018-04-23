@@ -43,7 +43,8 @@ exports.userProfilePost = function (req, res) {
         }
     ).then((result) => {
         models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
-            res.render('pages/user/profile', {
+            res.render('pages/user/setting', {
+                user : req.session.user,
                 userProfile: userProfile.dataValues,
                 notification: {
                     type: 'success',
@@ -84,7 +85,15 @@ exports.userSurveyPost = function (req, res) {
 }
 
 exports.userSettingGet = function (req, res) {
-    res.render('pages/user/setting');
+    models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
+        res.render('pages/user/setting', {
+            user : req.session.user,
+            userProfile: userProfile.dataValues
+        });
+    }).catch((err) => {
+        console.log(err);
+        res.send("Some Error Accured");
+    });
 }
 
 exports.userSettingPost = function (req, res) {
