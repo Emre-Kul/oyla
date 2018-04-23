@@ -10,9 +10,6 @@
     <% include ../../partials/header.ejs %>
         <script>
             $(document).ready(function(){
-                $('#accountDiv').hide();
-                $('#profileDiv').hide();
-
                 $('#profileDiv').fadeIn("slow");
                 
                 $('#toggleProfile').click(function(){
@@ -31,18 +28,18 @@
         </script>
         <main role="main" class="container">
             <div class="row">
-                <div class="col col-3" >
+                <div class="col col-4" >
                     <div class="text-center mb-3">
                         SETTINGS
                     </div>
                     <button class="btn btn-outline-success btn-block active" id="toggleProfile">Profile</button>
                     <button class="btn btn-outline-success btn-block" id="toggleAccount">Account</button>
                 </div>
-                <div class="col col-9">
-                    <div id="profileDiv">
+                <div class="col col-8">
+                    <div id="profileDiv" style="display:none">
                          <% include ../../partials/userSettingProfile.ejs %>
                     </div>
-                    <div id="accountDiv">
+                    <div id="accountDiv" style="display:none">
                         <% include ../../partials/userSettingAccount.ejs %>
                     </div>
                 </div>

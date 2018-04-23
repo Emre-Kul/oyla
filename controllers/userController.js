@@ -5,7 +5,7 @@ exports.userProfileByIdGet = function (req, res) {
     models.User.findOne({ where: { username: username } }).then((user) => {
         models.UserProfile.findOne({ where: { user_id: user.dataValues.id } }).then((userProfile) => {
             res.render('pages/user/profile', {
-                user : user.dataValues,
+                user: user.dataValues,
                 userProfile: userProfile.dataValues
             });
         });
@@ -18,7 +18,7 @@ exports.userProfileByIdGet = function (req, res) {
 exports.userProfileGet = function (req, res) {
     models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
         res.render('pages/user/profile', {
-            user : req.session.user,
+            user: req.session.user,
             userProfile: userProfile.dataValues
         });
     }).catch((err) => {
@@ -54,7 +54,7 @@ exports.userSurveyPost = function (req, res) {
 exports.userSettingGet = function (req, res) {
     models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
         res.render('pages/user/setting', {
-            user : req.session.user,
+            user: req.session.user,
             userProfile: userProfile.dataValues
         });
     }).catch((err) => {
@@ -63,8 +63,13 @@ exports.userSettingGet = function (req, res) {
     });
 }
 
-exports.userSettingProfilePost = function (req, res) {
-    const { fullname, income, sex, degree } = req.body;
+exports.userSettingPost = function (req, res) {
+    const { fullname, income, sex, degree, settingType } = req.body;
+
+    if(settingType === 'profile'){}
+    if(settingType === 'account'){}
+    //i will fix this
+
     models.UserProfile.update(
         {
             fullname: fullname,
@@ -80,7 +85,7 @@ exports.userSettingProfilePost = function (req, res) {
     ).then((result) => {
         models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
             res.render('pages/user/setting', {
-                user : req.session.user,
+                user: req.session.user,
                 userProfile: userProfile.dataValues,
                 notification: {
                     type: 'success',
@@ -95,11 +100,6 @@ exports.userSettingProfilePost = function (req, res) {
         res.send(err.errors[0].message);
     });
 }
-
-exports.userSettingAccountPost = function (req, res) {
-    res.render('pages/user/setting');
-}
-
 exports.logoutGet = function (req, res) {
     req.session.destroy();
     res.redirect('/');
