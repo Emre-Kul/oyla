@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <% include ../../partials/head.ejs %>
-    <title>Oyla</title>
-</head>
+    <head>
+        <% include ../../partials/head.ejs %>
+        <title>Oyla</title>
+    </head>
 
-<body>
-    <% include ../../partials/header.ejs %>
-    
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col col-md-6">
-                <span>Pictures or other things</span>
+    <body>
+        <% include ../../partials/header.ejs %>
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col col-md-6">
+                    <span>Pictures or other things</span>
+                </div>
+                <div class="col col-md-6">
+                        <p><%= user.username %></p>
+                        <p><%= user.email %></p>
+                        <p><%= userProfile.fullname %></p>
+                        <p><%= userProfile.income %></p>
+                        <p><%= userProfile.sex %></p>
+                        <p><%= userProfile.degree %></p>
+                </div>
             </div>
-            <div class="col col-md-6">
-                    <p><%= user.username %></p>
-                    <p><%= user.email %></p>
-                    <p><%= userProfile.fullname %></p>
-                    <p><%= userProfile.income %></p>
-                    <p><%= userProfile.sex %></p>
-                    <p><%= userProfile.degree %></p>
-            </div>
-        </div>
-    </main>
-    
-    <% include ../../partials/footer.ejs %>
-
-</body>
+        </main>
+        <% include ../../partials/footer.ejs %>
+    </body>
 
 </html>
