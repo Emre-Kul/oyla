@@ -57,8 +57,7 @@
                         </div>
                 </div>
             </div>
-        </div>
-            
+        </div> 
     </main>
 
     <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
@@ -271,7 +270,7 @@
                     question_index++
                     modal.modal('hide')
                     var page = $('html, body')
-                    page.animate({ scrollTop: page.height() }, 500)
+                    page.animate({ scrollTop: page.height() - 500 }, 500)
 
                     if(type == 'rating') {
                         $('.bar-rating').barrating({
