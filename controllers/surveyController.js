@@ -11,9 +11,12 @@ exports.createSurveyGet = function (req, res) {
 exports.createSurveyPost = function (req, res) {
     const { survey } = req.body;
 
+    res.send(req.body)
+/*
     models.Survey.create(survey).then((survey) => {
         res.redirect('/');  
     }).catch((err) => {
         res.status(404).send(err.errors[0].message);
     });
+*/
 }

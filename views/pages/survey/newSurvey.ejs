@@ -4,6 +4,9 @@
 <head>
     <% include ../../partials/head.ejs %>
     <link rel="stylesheet" href="/css/survey.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/components/jquery-bar-rating/dist/themes/bars-1to10.css">
+    <link rel="stylesheet" href="/components/nestable2/dist/jquery.nestable.min.css">
     <title>Oyla</title>
 </head>
 
@@ -109,9 +112,7 @@
     <script src="/components/nestable2/jquery.nestable.js"></script>
     <script type="text/javascript">
         $(function() {
-            $('#example').barrating({
-                theme: 'fontawesome-stars'
-            });
+            var question_index = 0;
 
             function getOption(number_of_options) {
                 return '<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'" required>'
@@ -127,6 +128,33 @@
                 form_group.show()
             }
 
+            function getUniqueID(name) {
+                return name + '_' + Math.random().toString(36).substr(0, 6);
+            }
+
+            function getTextBox() {
+                return '<input type="text" class="form-control" placeholder="Your Answer">';
+            }
+
+            function getCheckBox(index, label) {
+                var id = getUniqueID('checkbox') + '_' + index;
+                return '<div class="form-check">'
+                    + '<input class="form-check-input" type="checkbox" value="" id="' + id + '">'
+                    + '<label class="form-check-label" for="' + id + '">' + label + '</label>'
+                    + '</div>';
+            }
+
+            function getRadio(id, index, label) {
+                return '<div class="form-check">'
+                    + '<input class="form-check-input" name="' + id + '" id="' + id + '_' + index + '" type="radio" value="">'
+                    + '<label class="form-check-label" for="' + id + '_' + index + '">' + label + '</label>'
+                    + '</div>';
+            }
+
+            function getHiddenInput(name, value) {
+                return '<input type="hidden" name="' + name + '" value="' + value + '">'
+            }
+
             $('#addQuestionModal').on('show.bs.modal', function (event) {
                 var number_of_options = 0;
                 var button = $(event.relatedTarget)
@@ -137,7 +165,7 @@
 
                 modal.find('input').val('')
 
-                if(type == 'textBox' || type == 'rating') {
+                if(type == 'textBox') {
                     modal.find('#min-length').val(0)
                     modal.find('#max-length').val(255)
 
@@ -157,7 +185,7 @@
 
                 modal.find('#question-form').unbind('submit').submit(function(event) {
                     event.preventDefault()
-                    if((type == 'textBox' || type == 'rating') && modal.find('#min-length').val() > modal.find('#max-length').val()) {
+                    if(type == 'textBox' && modal.find('#min-length').val() > modal.find('#max-length').val()) {
                         modal.find('#min-length').trigger('focus')
                         return;
                     }
@@ -173,31 +201,62 @@
 
                     switch(type) {
                         case 'textBox':
-                            question += 'TextBox';
+                            question += getTextBox();
                             break;
 
                         case 'checkBox':
-                            question += 'CheckBox';
+                            modal.find('#options > input').each(function(index) {
+                                question += getCheckBox(index, $(this).val())
+                            });
                             break;
 
                         case 'multipleChoices':
-                            question += 'multipleChoices';
+                            var id = getUniqueID('radio');
+                            modal.find('#options > input').each(function(index) {
+                                question += getRadio(id, index, $(this).val())
+                            });
                             break;
 
                         case 'dropdownList':
-                            question += 'dropdownList';
+                            question += '<select class="form-control">';
+                            modal.find('#options > input').each(function(index) {
+                                question += '<option>' + $(this).val() + '</option>';
+                            });
+                            question += '</select>';
                             break;
 
                         case 'rating':
-                            question += 'rating';
+                            question += '<select class="bar-rating">';
+                            modal.find('#options > input').each(function(index) {
+                                question += '<option>' + $(this).val() + '</option>';
+                            });
+                            question += '</select>';
                             break;
 
                         case 'sorting':
-                            question += 'sorting';
+                            question += '<div class="dd">';
+                            question += '<ol class="dd-list">';
+                            modal.find('#options > input').each(function(index) {
+                                question += '<li class="dd-item" data-id="' + (index + 1) + '">';
+                                question += '<div class="dd-handle">' + $(this).val() + '</div>';
+                                question += '</li>';
+                            });
+                            question += '</ol>';
+                            question += '</div>';
                             break;
                         
                         default:
                     }
+
+                    question += getHiddenInput('questions[' + question_index + '][question]', modal.find('#question-text').val())
+
+                    if(type == 'textBox')
+                        question += getHiddenInput('questions[' + question_index + '][min_length]', modal.find('#min-length').val())
+                        + getHiddenInput('questions[' + question_index + '][max_length]', modal.find('#max-length').val());
+                    else
+                        modal.find('#options > input').each(function(index) {
+                            question += getHiddenInput('questions[' + question_index + '][options][' + index +']', $(this).val())
+                        });
 
                     question += '</p>'
                         + '</div>'
@@ -209,9 +268,20 @@
                         + '</div></div></div>';
 
                     questions.append(question)
+                    question_index++
                     modal.modal('hide')
                     var page = $('html, body')
-                    page.animate({ scrollTop: page.height()  }, 500)
+                    page.animate({ scrollTop: page.height() }, 500)
+
+                    if(type == 'rating') {
+                        $('.bar-rating').barrating({
+                            theme: 'bars-1to10'
+                        });
+                    } else if(type == 'sorting') {
+                        $('.dd').nestable({
+
+                        });
+                    }
                 });
 
                 modal.find('#question-text').trigger('focus')
