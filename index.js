@@ -6,6 +6,8 @@ const session = require('express-session');
 const models = require('./models');
 const app = express();
 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +19,9 @@ app.use(session({
     secret: 'random',
     resave: false,
     saveUninitialized: true,
+    store: new SequelizeStore({
+        db: models.sequelize
+    }),
     cookie: {
         expires: 600000
     }
@@ -31,33 +36,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/index.js'));
 
-app.use('/auth', function (req, res, next) {
-    if (req.session.user) {
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/auth.js'));
-
-app.use('/user', function (req, res, next) {
-    if (!req.session.user) {
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/user.js'));
-
-app.use('/admin', function (req, res, next) {
-    if (!req.session.user && false) {//useless mw for now
-        res.redirect('/');
-    }
-    else {
-        next();
-    }
-}, require('./routes/admin.js'));
-
+app.use('/auth',require('./routes/auth.js'));
+app.use('/user', require('./routes/user.js'));
+app.use('/admin', require('./routes/admin.js'));
 app.use('/survey', require('./routes/survey.js'));
 app.use('/error', require('./routes/error.js'));
 

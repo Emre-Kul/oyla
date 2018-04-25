@@ -3,15 +3,49 @@
 
 <head>
     <% include ../../partials/head.ejs %>
-    <title>Oyla</title>
+        <title>Oyla</title>
 </head>
 
 <body>
     <% include ../../partials/header.ejs %>
-    <main role="main" class="container">
-        <h3>Will Show User Settings</h3>
-    </main>
-    <% include ../../partials/footer.ejs %>
+        <script>
+            $(document).ready(function(){
+                $('#profileDiv').fadeIn("slow");
+                
+                $('#toggleProfile').click(function(){
+                    $('#accountDiv').hide();
+                    $('#profileDiv').fadeIn("slow");
+                    $('#toggleProfile').addClass("active");
+                    $('#toggleAccount').removeClass("active");
+                });
+                $('#toggleAccount').click(function(){
+                    $('#profileDiv').hide();
+                    $('#accountDiv').fadeIn("show");
+                    $('#toggleProfile').removeClass("active");
+                    $('#toggleAccount').addClass("active");
+                });
+            });
+        </script>
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col col-4" >
+                    <div class="text-center mb-3">
+                        SETTINGS
+                    </div>
+                    <button class="btn btn-outline-success btn-block active" id="toggleProfile">Profile</button>
+                    <button class="btn btn-outline-success btn-block" id="toggleAccount">Account</button>
+                </div>
+                <div class="col col-8">
+                    <div id="profileDiv" style="display:none">
+                         <% include ../../partials/userSettingProfile.ejs %>
+                    </div>
+                    <div id="accountDiv" style="display:none">
+                        <% include ../../partials/userSettingAccount.ejs %>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <% include ../../partials/footer.ejs %>
 
 </body>
 

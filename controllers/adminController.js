@@ -1,7 +1,7 @@
 const models = require('../models/');
 const Op = require('sequelize').Op;
 
-const SQL_LIMIT = 2;
+const CONFIG = require('../config/appConfig.js');
 
 exports.dashboardGet = function (req, res) {
     res.render('pages/admin/dashboard');
@@ -19,14 +19,14 @@ exports.userGet = function (req, res) {
                     [Op.like]: search
                 }
             },
-            offset: SQL_LIMIT * page,
-            limit: SQL_LIMIT
+            offset: CONFIG.SQL_LIMIT * page,
+            limit: CONFIG.SQL_LIMIT
         }
     ).then((users) => {
         let userValues = users.rows.map((user) => {
             return user.dataValues;
         })
-        res.render('pages/admin/user', { users: userValues, pagination: { pageCount: Math.ceil(users.count/SQL_LIMIT) } });
+        res.render('pages/admin/user', { users: userValues, pagination: { pageCount: Math.ceil(users.count/CONFIG.SQL_LIMIT) } });
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
@@ -44,14 +44,14 @@ exports.surveyGet = function (req, res) {
                     [Op.like]: search
                 }
             },
-            offset: SQL_LIMIT * page,
-            limit: SQL_LIMIT
+            offset: CONFIG.SQL_LIMIT * page,
+            limit: CONFIG.SQL_LIMIT
         }
     ).then((surveys) => {
         let surveyValues = surveys.rows.map((survey) => {
             return survey.dataValues;
         });
-        res.render('pages/admin/survey', { surveys: surveyValues, pagination: { pageCount: Math.ceil(surveys.count/SQL_LIMIT) } });//will calculate page count
+        res.render('pages/admin/survey', { surveys: surveyValues, pagination: { pageCount: Math.ceil(surveys.count/CONFIG.SQL_LIMIT) } });//will calculate page count
     }).catch((e) => {
         console.log(e);
         res.redirect('/error/500');
