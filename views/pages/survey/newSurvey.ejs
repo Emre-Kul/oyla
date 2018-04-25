@@ -48,23 +48,23 @@
                         Add new question
                     </div>
                         <div id="add-question" class="card-body">
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="textBox">Text Box</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="checkBox">Check Box</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="multipleChoices">Multiple Choices</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="dropdownList">Dropdown List</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="rating">Rating</button>
-                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#addQuestionModal" data-question-type="sorting">Sorting</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="textBox" data-type-name="Text Box">Text Box</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="checkBox" data-type-name="Check Box">Check Box</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="multipleChoices" data-type-name="Multiple Choices">Multiple Choices</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="dropdownList" data-type-name="Dropdown List">Dropdown List</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="rating" data-type-name="Rating">Rating</button>
+                            <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#questionModal" data-question-type="sorting" data-type-name="Sorting">Sorting</button>
                         </div>
                 </div>
             </div>
         </div> 
     </main>
 
-    <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addQuestionModalLabel">Add question</h5>
+                <h5 class="modal-title" id="questionModalLabel">Add question</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -113,8 +113,8 @@
         $(function() {
             var question_index = 0;
 
-            function getOption(number_of_options) {
-                return '<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'" required>'
+            function getOption(number_of_options, value) {
+                return '<input type="text" class="option form-control" placeholder="Option ' + number_of_options +'"' + (typeof value === 'undefined' ? '' : ' value="' + value + '"') + ' required>'
             }
 
             function hideFormGroup(form_group) {
@@ -154,26 +154,47 @@
                 return '<input type="hidden" name="' + name + '" value="' + value + '">'
             }
 
-            $('#addQuestionModal').on('show.bs.modal', function (event) {
+            $('#questionModal').on('show.bs.modal', function (event) {
                 var number_of_options = 0;
                 var button = $(event.relatedTarget)
                 var type = button.data('question-type')
-                var type_name = button.text()
+                var type_name = button.data('type-name')
                 var modal = $(this)
+                var parent = null
                 modal.find('.modal-title').text(type_name)
 
                 modal.find('input').val('')
 
                 if(type == 'textBox') {
-                    modal.find('#min-length').val(0)
-                    modal.find('#max-length').val(255)
+                    if(button.hasClass('question-edit')) {
+                        parent = button.parent().parent().parent()
+                        var input = parent.find('input:hidden')
+                        modal.find('#question-text').val(input.val())
+                        modal.find('#min-length').val(input.next().val())
+                        modal.find('#max-length').val(input.next().next().val())
+                    } else {
+                        modal.find('#min-length').val(0)
+                        modal.find('#max-length').val(255)
+                    }
 
                     hideFormGroup(modal.find('#question-options'))
                     showFormGroup(modal.find('#question-restrictions'))
                 } else {
                     var options = modal.find('#options')
-                    options.html(getOption(++number_of_options))
-                    options.append(getOption(++number_of_options))
+                    options.html('')
+                    if(button.hasClass('question-edit')) {
+                        parent = button.parent().parent().parent()
+                        var input = parent.find('input:hidden')
+                        modal.find('#question-text').val(input.val())
+                        input.nextAll().each(function(index) {
+                            options.append(getOption(++number_of_options, $(this).val()))
+                        });
+                    } else {
+                        options.append(getOption(++number_of_options))
+                        options.append(getOption(++number_of_options))
+                    }
+                    
+                    
                     modal.find('.option-add').unbind('click').click(function() {
                         options.append(getOption(++number_of_options))
                     })
@@ -181,7 +202,7 @@
                     showFormGroup(modal.find('#question-options'))
                     hideFormGroup(modal.find('#question-restrictions'))
                 }
-
+                
                 modal.find('#question-form').unbind('submit').submit(function(event) {
                     event.preventDefault()
                     if(type == 'textBox' && modal.find('#min-length').val() > modal.find('#max-length').val()) {
@@ -195,7 +216,7 @@
                     var question = '<div class="question card">'
                         + '<div class="card-body">'
                         + '<h5 class="card-title">' + modal.find('input#question-text').val() + '</h5>'
-                        + '<p class="card-text">';
+                        + '<div class="card-text">';
 
                     switch(type) {
                         case 'textBox':
@@ -256,16 +277,20 @@
                             question += getHiddenInput('questions[' + question_index + '][options][' + index +']', $(this).val())
                         });
 
-                    question += '</p>'
+                    question += '</div>'
                         + '</div>'
                         + '<div class="card-footer">'
                         + '<small class="text-muted">' + type_name + '</small>'
                         + '<div class="float-right">'
-                        + '<span class="badge badge-primary question-edit">Edit</span> '
+                        + '<span class="badge badge-primary question-edit" data-toggle="modal" data-target="#questionModal" data-question-type="' + type + '" data-type-name="' + type_name + '">Edit</span> '
                         + '<span class="badge badge-danger question-remove">Remove</span>'
                         + '</div></div></div>';
 
-                    questions.append(question)
+                    if(button.hasClass('question-edit')) {
+                        parent.after(question)
+                        parent.remove()
+                    } else
+                        questions.append(question)
                     question_index++
                     modal.modal('hide')
                     var page = $('html, body')
