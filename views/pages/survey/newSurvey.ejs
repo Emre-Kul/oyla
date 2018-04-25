@@ -284,8 +284,8 @@
                     $('span.question-remove').unbind('click').click(function() {
                         var parent = $(this).parent().parent().parent();
                         parent.hide('slow', function(){ parent.remove(); });
-                        console.log(questions.length)
-                        if(questions.length == 1)
+                        //console.log(questions.children().length)
+                        if(questions.children().length == 2)
                             questions.find('p#no-questions').show('slow');
                     });
                 });
