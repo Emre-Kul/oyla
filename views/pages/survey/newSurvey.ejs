@@ -190,8 +190,7 @@
                     }
 
                     var questions = $('#questions');
-                    if(questions.has('p#no-questions').length)
-                        questions.html('')
+                    questions.find('p#no-questions').hide();
 
                     var question = '<div class="question card">'
                         + '<div class="card-body">'
@@ -281,6 +280,14 @@
 
                         });
                     }
+
+                    $('span.question-remove').unbind('click').click(function() {
+                        var parent = $(this).parent().parent().parent();
+                        parent.hide('slow', function(){ parent.remove(); });
+                        console.log(questions.length)
+                        if(questions.length == 1)
+                            questions.find('p#no-questions').show('slow');
+                    });
                 });
 
                 modal.find('#question-text').trigger('focus')
