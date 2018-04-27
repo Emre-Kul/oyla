@@ -39,6 +39,33 @@
                       <p id="no-questions" class="text-muted">There is no questions.</p>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <a class="badge badge-secondary" data-toggle="collapse" href="#surveyOptions" role="button" aria-expanded="false" aria-controls="surveyOptions">
+                        Survey Options
+                    </a>
+                    <div class="collapse" id="surveyOptions">
+                        <div class="card card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" name="private_survey" type="checkbox" value="" id="checkBoxPrivateSurvey">
+                                <label class="form-check-label" for="checkBoxPrivateSurvey">
+                                    Make this survey private
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" name="show_results" type="checkbox" value="" id="checkBoxShowResults">
+                                <label class="form-check-label" for="checkBoxShowResults">
+                                    Show the results of survey to everyone who can access the survey
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" name="ip_restriction" type="checkbox" value="" id="checkBoxIpRestriction">
+                                <label class="form-check-label" for="checkBoxIpRestriction">
+                                    Prevent to fill survey with same IP addresses
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
                   <button type="submit" class="btn btn-primary float-right">Create the survey</button>
                 </form>
             </div>
