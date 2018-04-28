@@ -344,6 +344,16 @@
 
                 modal.find('#question-text').trigger('focus')
             });
+
+            $('#new-survey').submit(function(event) {
+                event.preventDefault()
+                if($('#questions').has('.question').length) {
+                    console.log("has question")
+                    //TODO: Need to fix input indexes because of sorting.
+                    $(this).unbind('submit')
+                    $(this).submit()
+                }
+            });
         });
     </script>     
 
