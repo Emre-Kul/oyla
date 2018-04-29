@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+const authHelper = require('../helpers/authHelper.js');
+
+router.get('/',authHelper.isNotLogined,(req, res) => {
     res.render('pages/index');
 });
 
