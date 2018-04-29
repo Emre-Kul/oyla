@@ -30,6 +30,9 @@ exports.userProfileGet = function (req, res) {
     });
 }
 
+exports.userDashboardGet = function (req, res) {
+    res.render('pages/user/dashboard');
+}
 exports.userSurveyGet = function (req, res) {
     let { search, page } = req.query;
     search = (typeof search === 'undefined') ? '%' : `%${search}%`;
