@@ -14,7 +14,7 @@ exports.userProfileByIdGet = function (req, res) {
         });
     }).catch((err) => {
         console.log(err);
-        res.send("Some Error Accured");
+        res.redirect('/error/404');
     });
 }
 
@@ -26,7 +26,7 @@ exports.userProfileGet = function (req, res) {
         });
     }).catch((err) => {
         console.log(err);
-        res.send("Some Error Accured");
+        res.redirect('/error/500');
     });
 }
 
