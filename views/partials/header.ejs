@@ -1,7 +1,12 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <% if(typeof session === 'undefined') { %>
+                <% var href="/" %>
+            <% }else { %>
+                <% var href="/user/dashboard" %>
+            <% } %>
+            <a class="navbar-brand" href="<%= href %>">
                 <img src="/logo.png" width="32" height="32"/>
                 Oyla
             </a>
