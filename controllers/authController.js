@@ -13,7 +13,7 @@ exports.loginPost = function (req, res) {
         }
         else {
             req.session.user = user.dataValues;
-            res.redirect('/');
+            res.redirect('pages/user/dashboard', { session:{ user: user.dataValues }} );
         }
     }).catch((err) => {
         res.status(404).send("Error Accured!");
