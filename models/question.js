@@ -16,10 +16,28 @@ module.exports = (sequelize, DataTypes) => {
       ),
       allowNull: false
     },
-    restriction: DataTypes.STRING
+    min_length: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      validate: { min: 0, max: 255 }
+    },
+    max_length: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      validate: { min: 0, max: 255 }
+    },
   }, {
     timestamps: false,
-    underscored: true
+    underscored: true,
+    validate: {
+      isValidRestrictions() {
+        if (this.min_length != null && this.max_length != null && (this.min_length >= this.max_length)) {
+          throw new Error('Invalid Restrictions.')
+        }
+      }
+    }
   });
   Question.associate = function(models) {
     models.Question.belongsTo(models.Survey, {

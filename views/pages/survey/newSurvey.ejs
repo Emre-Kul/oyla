@@ -294,6 +294,7 @@
                         default:
                     }
 
+                    question += getHiddenInput('questions[' + question_index + '][type]', type)
                     question += getHiddenInput('questions[' + question_index + '][question]', modal.find('#question-text').val())
 
                     if(type == 'textBox')
