@@ -4,8 +4,11 @@ const userController = require('../controllers/userController.js');
 
 const authHelper = require('../helpers/authHelper.js');
 
+
 userRouter.get('/profile/:username', userController.userProfileByIdGet);
 userRouter.get('/profile', authHelper.isLogined, userController.userProfileGet);
+
+userRouter.get('/dashboard', authHelper.isLogined, userController.userDashboardGet);
 
 userRouter.get('/survey', authHelper.isLogined, userController.userSurveyGet);
 

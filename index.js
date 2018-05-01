@@ -42,6 +42,10 @@ app.use('/admin', require('./routes/admin.js'));
 app.use('/survey', require('./routes/survey.js'));
 app.use('/error', require('./routes/error.js'));
 
+app.get('*', function(req, res){
+  res.redirect('/error/404');
+});
+
 models.sequelize.sync().then(function () {
     const server = app.listen(process.env.PORT || 8080, () => {
         console.log('Server Started At', server.address().port);

@@ -14,7 +14,7 @@ exports.userProfileByIdGet = function (req, res) {
         });
     }).catch((err) => {
         console.log(err);
-        res.send("Some Error Accured");
+        res.redirect('/error/404');
     });
 }
 
@@ -26,10 +26,42 @@ exports.userProfileGet = function (req, res) {
         });
     }).catch((err) => {
         console.log(err);
-        res.send("Some Error Accured");
+        res.redirect('/error/500');
     });
 }
 
+exports.userDashboardGet = function (req, res) {
+    let { search, page } = req.query;
+    search = (typeof search === 'undefined') ? '%' : `%${search}%`;
+    page = (typeof page === 'undefined') ? 0 : parseInt(page);
+
+
+    models.Survey.findAndCountAll({
+        where: {
+            title: {
+                [Op.like]: search
+            }
+        },
+        offset: CONFIG.SQL_LIMIT * page,
+        limit: CONFIG.SQL_LIMIT
+    }).
+        then((surveys) => {
+            console.log(surveys);
+            if (surveys) {
+                let surveyList = surveys.rows.map((survey) => {
+                    return survey.dataValues;
+                });
+                console.log(surveyList);
+                res.render('pages/user/dashboard', { surveys: surveyList, pagination: { pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT) } });
+            }
+            else
+                res.render('pages/user/dashboard', { surveys: [] });
+        }).
+        catch((err) => {
+            res.send("ERROR")
+            console.log(err);
+        });
+}
 exports.userSurveyGet = function (req, res) {
     let { search, page } = req.query;
     search = (typeof search === 'undefined') ? '%' : `%${search}%`;
@@ -67,7 +99,6 @@ exports.userSurveyGet = function (req, res) {
 exports.userSettingGet = function (req, res) {
     models.UserProfile.findOne({ where: { user_id: req.session.user.id } }).then((userProfile) => {
         res.render('pages/user/setting', {
-            user: req.session.user,
             userProfile: userProfile.dataValues
         });
     }).catch((err) => {

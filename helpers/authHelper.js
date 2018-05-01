@@ -4,10 +4,9 @@ exports.isNotLogined = function (req, res, next) {
         next();
     }
     else {
-        res.redirect('/');
+        res.redirect('/user/dashboard');
     }
 }
-
 exports.isLogined = function (req, res, next) {
     if (req.session.user) {
         next();
