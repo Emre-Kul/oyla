@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev-server": "nodemon index.js",
-    "init-db": "node initDb.js",
+    "db:refresh": "node ./scripts/refreshDatabase.js",
+    "install": "node ./scripts/install.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Emre Kul,Kaan Sönmezöz,Ramazan Vapurcu",
