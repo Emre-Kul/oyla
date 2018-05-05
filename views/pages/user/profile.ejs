@@ -9,19 +9,54 @@
     <body>
         <% include ../../partials/header.ejs %>
         <main role="main" class="container">
-            <div class="row">
-                <div class="col col-md-6">
-                    <span>Pictures or other things</span>
-                </div>
-                <div class="col col-md-6">
-                        <p><%= user.username %></p>
-                        <p><%= user.email %></p>
-                        <p><%= userProfile.fullname %></p>
-                        <p><%= userProfile.income %></p>
-                        <p><%= userProfile.sex %></p>
-                        <p><%= userProfile.degree %></p>
-                </div>
-            </div>
+            <div id="user-profile-2" class="user-profile">
+                <div class="tabbable">
+                  <ul class="nav nav-tabs padding-18">
+                    <li class="active">
+                      <a data-toggle="tab" href="#home">
+                        <i class="green ace-icon fa fa-user bigger-120"></i>
+                        Profile
+                      </a>
+                    </li>                  
+                    <li class="ml-4">
+                      <a data-toggle="tab" href="#pictures">
+                        <i class="pink ace-icon fa fa-picture-o bigger-120"></i>
+                        Surveys
+                      </a>
+                    </li>
+                  </ul>
+          
+                  <div class="tab-content no-border">
+                    <div id="home" class="tab-pane in active">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-3 center mt-4">
+                          <div class="container">
+                            <img class="rounded mx-auto d-block img-fluid" alt=" Avatar" id="avatar2" src="http://bootdey.com/img/Content/avatar/avatar1.png">
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-9 mt-4">
+                            <p class="text-center"><h4><%=user.username %></h4></p>
+                            <div class="row">
+                                <div class="border border-info border-left-0 border-right-0 border-top-0">
+                                        <span>E-mail :</span>  <span><%=user.email %></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <span>Full Name :</span>  <span><%=userProfile.fullname %></span>
+                            </div>
+                            <div class="row">
+                                <span>Sex :</span>  <span><%=userProfile.sex %></span>
+                            </div>
+                            <div class="row">
+                                <span>Degree :</span>  <span><%=userProfile.degree %></span>
+                            </div>
+                            <div class="row">
+                                <span>Income :</span> <span><%=userProfile.income %></span>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  
         </main>
         <% include ../../partials/footer.ejs %>
     </body>
