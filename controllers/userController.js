@@ -79,12 +79,10 @@ exports.userSurveyGet = function (req, res) {
         limit: CONFIG.SQL_LIMIT
     }).
         then((surveys) => {
-            console.log(surveys);
             if (surveys) {
                 let surveyList = surveys.rows.map((survey) => {
                     return survey.dataValues;
                 });
-                console.log(surveyList);
                 res.render('pages/user/survey', { surveys: surveyList, pagination: { pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT) } });
             }
             else

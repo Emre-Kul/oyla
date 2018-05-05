@@ -16,14 +16,7 @@
                     <div class="container">
                         <% include ../../partials/searchBar.ejs %>
                          <%  for(survey of surveys){ %>
-                        <div class="card mb-4">
-                            <div class="card-header bg-dark text-white"><%= survey.title %></div>
-                            <div class="card-body bg-primary text-white"><%= survey.description %></div>
-                            <div class="card-footer">
-                                <span>Created At : <%= survey.created_at %></span>
-                                <span>Updated At : <%= survey.updated_at %></span>
-                            </div>
-                        </div>
+                            <% include ../../partials/surveyContainer.ejs %>
                         <% } %>
                         <% include ../../partials/paginationBar.ejs %>
                     </div>
