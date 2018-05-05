@@ -4,6 +4,9 @@
 <head>
     <% include ../../partials/head.ejs %>
     <link rel="stylesheet" href="/css/survey.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/components/jquery-bar-rating/dist/themes/bars-1to10.css">
+    <link rel="stylesheet" href="/components/nestable2/dist/jquery.nestable.min.css">
     <title><%= survey.title %> | Oyla</title>
 </head>
 
@@ -81,7 +84,13 @@
     <script src="/components/nestable2/jquery.nestable.js"></script>
     <script type="text/javascript">
         $(function() {
+            $('.dd').nestable({
 
+            });
+
+            $('.bar-rating').barrating({
+                theme: 'bars-1to10'
+            });
         });
     </script>
 
