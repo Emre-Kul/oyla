@@ -1,7 +1,22 @@
 const models = require('../models');
 
 exports.showSurveyGet = function (req, res) {
-    res.render('pages/survey/showSurvey');
+
+    models.Survey.findById(req.params.surveyId, {
+        //TODO: Change include to reduce data.
+        include: [{
+            all: true,
+            nested: true
+        }]
+    }).then((survey) => {
+        //res.send(survey)
+        res.render('pages/survey/showSurvey', {
+            survey: survey
+        });
+    }).catch((err) => {
+        res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
+    })
+
 }
 
 exports.createSurveyGet = function (req, res) {
@@ -33,7 +48,7 @@ exports.createSurveyPost = function (req, res) {
                 survey_id: survey.id
             }).then((question) => {
                 if (undefined !== input_question.options) {
-                    for(j = 0; j < input_question.options.length; j++) {
+                    for (j = 0; j < input_question.options.length; j++) {
                         models.Option.create({
                             option: input_question.options[j],
                             question_id: question.id
@@ -42,6 +57,8 @@ exports.createSurveyPost = function (req, res) {
                 }
             });
         }
+
+        //TODO: Save survey options.
 
         res.redirect('/survey/' + survey.id);
     }).catch((err) => {
