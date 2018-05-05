@@ -136,13 +136,17 @@ exports.userSettingPost = function (req, res) {
                 });
             }
             else {
+                const hashedPassword = bcrypt.hashSync(newpassword, bcrypt.genSaltSync());
                 models.User.update(
-                    { password: bcrypt.hashSync(newpassword, bcrypt.genSaltSync()) },
+                    { password: hashedPassword },
                     { where: { id: req.session.user.id } }
-                ).then(() => resolve({
-                    type: 'success',
-                    text: 'Password succesfully changed'
-                })).catch(reject);
+                ).then(() => {
+                    req.session.user.password = hashedPassword;
+                    resolve({
+                        type: 'success',
+                        text: 'Password succesfully changed'
+                    })
+                }).catch(reject);
             }
         }
     }).then((notification) => {
