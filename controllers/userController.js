@@ -79,12 +79,10 @@ exports.userSurveyGet = function (req, res) {
         limit: CONFIG.SQL_LIMIT
     }).
         then((surveys) => {
-            console.log(surveys);
             if (surveys) {
                 let surveyList = surveys.rows.map((survey) => {
                     return survey.dataValues;
                 });
-                console.log(surveyList);
                 res.render('pages/user/survey', { surveys: surveyList, pagination: { pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT) } });
             }
             else
@@ -136,13 +134,17 @@ exports.userSettingPost = function (req, res) {
                 });
             }
             else {
+                const hashedPassword = bcrypt.hashSync(newpassword, bcrypt.genSaltSync());
                 models.User.update(
-                    { password: bcrypt.hashSync(newpassword, bcrypt.genSaltSync()) },
+                    { password: hashedPassword },
                     { where: { id: req.session.user.id } }
-                ).then(() => resolve({
-                    type: 'success',
-                    text: 'Password succesfully changed'
-                })).catch(reject);
+                ).then(() => {
+                    req.session.user.password = hashedPassword;
+                    resolve({
+                        type: 'success',
+                        text: 'Password succesfully changed'
+                    })
+                }).catch(reject);
             }
         }
     }).then((notification) => {

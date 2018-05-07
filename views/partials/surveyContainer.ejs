@@ -1,0 +1,26 @@
+<% 
+    var addPrefix = function(number){
+        return (number < 10) ? "0"+number : number;
+    }
+    var updateDate = new Date(survey.updated_at)
+    var parsedUpdateDate = updateDate.getDate() + '/' + (updateDate.getMonth() + 1) + '/' + updateDate.getFullYear()
+    parsedUpdateDate += " " + addPrefix(updateDate.getHours()) + ':' + addPrefix(updateDate.getMinutes());
+%>
+
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="card-title">
+            <%= survey.title %>
+        </h5>
+
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <%= survey.description %>
+        </p>
+    </div>
+    <div class="card-footer text-right">
+        <span><%= parsedUpdateDate %></span>
+    </div>
+</div>
