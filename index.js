@@ -23,7 +23,7 @@ app.use(session({
         db: models.sequelize
     }),
     cookie: {
-        expires: 9999999999
+        expires: 99999999999
     }
 }));
 

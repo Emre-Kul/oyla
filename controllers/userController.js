@@ -38,10 +38,14 @@ exports.userDashboardGet = function (req, res) {
 
     models.Survey.findAndCountAll({
         where: {
+            user_id: {
+                [Op.ne]: req.session.user.id
+            },
             title: {
                 [Op.like]: search
             }
         },
+        order: [["updated_at", "ASC"]],
         offset: CONFIG.SQL_LIMIT * page,
         limit: CONFIG.SQL_LIMIT
     }).
@@ -75,6 +79,7 @@ exports.userSurveyGet = function (req, res) {
                 [Op.like]: search
             }
         },
+        order: [["updated_at", "DESC"]],
         offset: CONFIG.SQL_LIMIT * page,
         limit: CONFIG.SQL_LIMIT
     }).
