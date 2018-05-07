@@ -45,7 +45,7 @@ exports.userDashboardGet = function (req, res) {
                 [Op.like]: search
             }
         },
-        order: [["updated_at", "ASC"]],
+        order: [["updated_at", "DESC"]],
         offset: CONFIG.SQL_LIMIT * page,
         limit: CONFIG.SQL_LIMIT
     }).
