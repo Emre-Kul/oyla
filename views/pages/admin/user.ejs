@@ -29,8 +29,8 @@
                             user = users[i];
                         %>
                         <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <td><a href="/user/profile/<%= user.username %>"><%= user.username%></a></td>
+                        <th scope="row"><%= pagination.pageStart+i+1 %></th>
+                        <td><a href="/user/profile/<%= user.username %>"><%= user.username %></a></td>
                         <td><%= user.email %><td>
                         <td>
                             <i class="fas fa-edit"></i>

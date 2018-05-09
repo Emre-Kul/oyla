@@ -30,9 +30,9 @@
                             survey = surveys[i];
                         %>
                         <tr>
-                            <th scope="row"><%= i+1 %></th>
+                            <th scope="row"><%= pagination.pageStart+i+1 %></th>
                             <td><%= survey.title %></td>
-                            <td><%= survey.user_id %></td>
+                            <td><a href="/user/profile/<%= survey.User.username %>"><%= survey.User.username %></a></td>
                             <td><%= survey.description %></td>
                             <td>
                                 <i class="fas fa-edit"></i>

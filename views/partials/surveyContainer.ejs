@@ -8,12 +8,22 @@
 %>
 
 <div class="card mb-4">
-    <div class="card-header bg-dark text-white">
-        <h5 class="card-title">
-            <%= survey.title %>
-        </h5>
+    <div class="card-header bg-dark text-light">
+        <div class="card-title row">
+            <div class="col">
+                <a class="text-light" href="/survey/<%= survey.id %>">
+                    <%= survey.title %>
+                </a>
+            </div>
 
-        <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <% if(typeof survey.User !== "undefined"){ %>
+            <div class="col  text-right">
+                <a class="text-light" href="/user/profile/<%= survey.User.username %>">
+                    <%= survey.User.username %>    
+                </a>
+            </div>
+            <% } %>
+        </div>
     </div>
     <div class="card-body">
         <p class="card-text">

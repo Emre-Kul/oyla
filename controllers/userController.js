@@ -45,6 +45,9 @@ exports.userDashboardGet = function (req, res) {
                 [Op.like]: search
             }
         },
+        include: [{
+            model: models.User
+        }],
         order: [["updated_at", "DESC"]],
         offset: CONFIG.SQL_LIMIT * page,
         limit: CONFIG.SQL_LIMIT
@@ -53,10 +56,18 @@ exports.userDashboardGet = function (req, res) {
             console.log(surveys);
             if (surveys) {
                 let surveyList = surveys.rows.map((survey) => {
-                    return survey.dataValues;
+                    let surveyObj = survey.dataValues;
+                    surveyObj.User = surveyObj.User.dataValues;
+                    return surveyObj;
                 });
                 console.log(surveyList);
-                res.render('pages/user/dashboard', { surveys: surveyList, pagination: { pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT) } });
+                res.render('pages/user/dashboard', {
+                    surveys: surveyList,
+                    pagination: {
+                        pageStart: CONFIG.SQL_LIMIT * page,
+                        pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT)
+                    }
+                });
             }
             else
                 res.render('pages/user/dashboard', { surveys: [] });
@@ -88,7 +99,14 @@ exports.userSurveyGet = function (req, res) {
                 let surveyList = surveys.rows.map((survey) => {
                     return survey.dataValues;
                 });
-                res.render('pages/user/survey', { surveys: surveyList, pagination: { pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT) } });
+                res.render('pages/user/survey',
+                    {
+                        surveys: surveyList,
+                        pagination: {
+                            pageStart: CONFIG.SQL_LIMIT * page,
+                            pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT)
+                        }
+                    });
             }
             else
                 res.render('pages/user/survey', { surveys: [] });
@@ -172,5 +190,3 @@ exports.logoutGet = function (req, res) {
     res.redirect('/');
     //res.render('pages/logout');//buggy
 }
-
-//So much repeated code.
