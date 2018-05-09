@@ -6,7 +6,7 @@ var createPaginationBar = function (pageCount) {
     var currentPage = (typeof params['page'] === 'undefined') ? 0 : parseInt(params['page']);
     var startPage = (PAGE_LISTING_LIMIT > currentPage) ? 0 : currentPage - PAGE_LISTING_LIMIT;
     var endPage = (currentPage + PAGE_LISTING_LIMIT + 1 >= pageCount) ? pageCount : currentPage + PAGE_LISTING_LIMIT + 1;
-    if(endPage === 1) return;
+    if(endPage <= 1) return;
     if (currentPage > 0) {
         params['page'] = currentPage - 1;
         $('#pagination-list').append('<li class="page-item"><a class="page-link" href="' + setUrlFromParams(params) + '"> &laquo; </a></li>');

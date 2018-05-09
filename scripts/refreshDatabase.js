@@ -1,4 +1,4 @@
-const models = require('./models');
+const models = require('../models');
 
 models.sequelize.sync({force : true}).then(function () {
     console.log("The database has been successfully initialized!");

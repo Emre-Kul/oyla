@@ -53,14 +53,12 @@ exports.userDashboardGet = function (req, res) {
         limit: CONFIG.SQL_LIMIT
     }).
         then((surveys) => {
-            console.log(surveys);
             if (surveys) {
                 let surveyList = surveys.rows.map((survey) => {
                     let surveyObj = survey.dataValues;
                     surveyObj.User = surveyObj.User.dataValues;
                     return surveyObj;
                 });
-                console.log(surveyList);
                 res.render('pages/user/dashboard', {
                     surveys: surveyList,
                     pagination: {
