@@ -3,6 +3,8 @@
 
 <head>
     <% include ../../partials/head.ejs %>
+
+    <script src="/components/chart.js/dist/Chart.bundle.min.js"></script>
     <title>Oyla</title>
 </head>
 
@@ -12,7 +14,7 @@
         <div class="row">
             <% include ../../partials/adminSideBar.ejs %>
             <div class="col col-9">
-                Dashboard
+                <% include ../../partials/adminChart.ejs %>
             </div>
         </div>
     </main>
