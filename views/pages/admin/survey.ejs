@@ -35,7 +35,9 @@
                             <td><a href="/user/profile/<%= survey.User.username %>"><%= survey.User.username %></a></td>
                             <td><%= survey.description %></td>
                             <td>
-                                <i class="fas fa-trash"></i>
+                                <a href="/admin/survey/delete/<%= survey.id %>" onclick="return confirm('Are you sure?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                         <% } %>
@@ -46,9 +48,7 @@
         </div>
         
     </main>
-    
     <% include ../../partials/footer.ejs %>
-
 </body>
 
 </html>

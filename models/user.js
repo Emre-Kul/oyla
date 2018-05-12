@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
 
 
   User.associate = function (models) {
-    models.User.hasMany(models.UserMeta);
-    models.User.hasOne(models.UserProfile);
+    models.User.hasMany(models.UserMeta,{onDelete : 'CASCADE'});
+    models.User.hasOne(models.UserProfile,{onDelete : 'CASCADE'});
   };
 
   User.prototype.validPassword = function (password) {
