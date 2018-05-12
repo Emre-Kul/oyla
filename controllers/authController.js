@@ -50,7 +50,7 @@ exports.registerPost = function (req, res) {
     }
 
     models.User.create({ username: username, password: password, email: email, token: 'NONE' }).then((user) => {
-        models.UserProfile.create({ user_id: user.id, income: 0 }).
+        models.UserProfile.create({ user_id: user.id }).
             then((userProfile) => {
                 req.session.user = user.dataValues;
                 res.redirect('/');

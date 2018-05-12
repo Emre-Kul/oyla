@@ -1,32 +1,27 @@
 const models = require('../models');
 
-function createAdmin() {
-    models.UserMeta.findOne({
-        where: {
-            user_id: 1,
-            key: "is_admin"
-        }
-    })
-        .then((userMeta) => {
-            if (!userMeta) {
-                models.UserMeta.create({ user_id: 1, key: "is_admin", value: "1" }).
-                    then(() => console.log("Admin Created...")).
-                    catch((e) => console.log(e));
-            }
-            else {
-                models.UserMeta.update({ value: "1" }, {
-                    where: {
-                        user_id: 1,
-                        key: "is_admin"
-                    }
-                }).
-                    then(() => console.log("Admin Updated...")).
-                    catch((e) => console.log(e));
-            }
-        })
-        .catch((e) => console.log(e));
+function createUser(userData) {
+    return new Promise((resolve, reject) => {
+        models.User.create(userData).then((user) => {
+            models.UserProfile.create({ user_id: user.id }).then((userProfile) => {
+                resolve(user, userProfile);
+            })
+        }).catch(reject);
+    });
+}
 
-    return 0;
+function createAdmin() {
+    return new Promise((resolve, reject) => {
+        createUser(
+            {
+                email: "admin@oyla.com",
+                password: "123456",
+                username: "admin"
+            }
+        ).then((user) => {
+            models.UserMeta.create({ user_id: user.id, key: "is_admin", value: "1" }).then(() => { resolve("Admin Created") });
+        }).catch(reject);
+    });
 }
 
 function install() {
@@ -34,8 +29,9 @@ function install() {
     models.sequelize.sync().then(function () {
         console.log("Connected to database!");
         console.log("Creating admin!");
-        createAdmin();
+        createAdmin().then(console.log).catch(console.log);
     }).catch(err => {
+        process.exit();
         console.error('Unable to connect to the database: ', err);
     });
 }

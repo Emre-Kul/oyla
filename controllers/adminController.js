@@ -129,6 +129,10 @@ exports.userGet = function (req, res) {
 }
 
 exports.userDeleteGet = function (req, res) {
+    if(req.session.user.id === parseInt(req.params.id)){
+        res.send("U can't delete Yourself");
+        return;
+    }
     models.User.destroy({
         where: {
             id: req.params.id
