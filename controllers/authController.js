@@ -6,12 +6,15 @@ exports.loginGet = function (req, res) {
 
 exports.loginPost = function (req, res) {
     const { email, password } = req.body;
-
-    models.User.findOne({ where: { email: email } }).then((user) => {
+    console.log(email,password);
+    models.User.findOne({
+        where: { email: email }
+    }).then((user) => {
         if (!user || !user.validPassword(password)) {
             res.render('pages/auth/login', { error: { message: "Invalid username or password" } });
         }
         else {
+            console.log(user);
             req.session.user = user.dataValues;
             res.redirect('/user/dashboard');
         }
