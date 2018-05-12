@@ -15,13 +15,21 @@
                     <%= survey.title %>
                 </a>
             </div>
-
+            
             <% if(typeof survey.User !== "undefined"){ %>
             <div class="col  text-right">
                 <a class="text-light" href="/user/profile/<%= survey.User.username %>">
                     <%= survey.User.username %>    
                 </a>
             </div>
+            <% } %>
+
+            <% if(typeof surveyDeleteShow !== "undefined") { %>
+                <div class="col  text-right">
+                    <a class="text-light" href="/user/survey/delete/<%= survey.id %>" onclick="return confirm('Are you sure?')">
+                        <i class="fas fa-trash"></i> 
+                    </a>
+                </div>
             <% } %>
         </div>
     </div>

@@ -100,6 +100,7 @@ exports.userSurveyGet = function (req, res) {
                 res.render('pages/user/survey',
                     {
                         surveys: surveyList,
+                        surveyDeleteShow: true,
                         pagination: {
                             pageStart: CONFIG.SQL_LIMIT * page,
                             pageCount: Math.ceil(surveys.count / CONFIG.SQL_LIMIT)
@@ -113,6 +114,21 @@ exports.userSurveyGet = function (req, res) {
             res.send("ERROR")
             console.log(err);
         });
+}
+
+exports.userSurveyDeleteGet = function (req, res) {
+    models.Survey.destroy({
+        where: {
+            user_id : req.session.user.id,
+            id: req.params.id
+        }
+    }).then(() => {
+        res.redirect(req.header('Referer') || "/user/survey");
+    }).catch((e) => {
+        console.log(e);
+        res.redirect('/error/500');
+    })
+
 }
 
 exports.userSettingGet = function (req, res) {
