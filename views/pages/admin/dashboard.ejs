@@ -14,7 +14,13 @@
         <div class="row">
             <% include ../../partials/adminSideBar.ejs %>
             <div class="col col-9">
-                <% include ../../partials/adminChart.ejs %>
+                <div class="row">
+                    <% for(stat of stats) { %>
+                        <div class="col-6">
+                            <% include ../../partials/adminChart.ejs %>
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
     </main>

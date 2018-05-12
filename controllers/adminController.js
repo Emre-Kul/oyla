@@ -4,7 +4,52 @@ const Op = require('sequelize').Op;
 const CONFIG = require('../config/appConfig.js');
 
 exports.dashboardGet = function (req, res) {
-    res.render('pages/admin/dashboard');
+    models.UserProfile.findAll().then((profiles) => {
+        let sex = { "male": 0, "female": 0, "unspecified": 0 };
+        let degree = { bachelor: 0, master: 0, doctoral: 0, unspecified: 0 };
+        let creationDate = [];
+
+        let profileValues = profiles.map((profile) => {
+            return profile.dataValues;
+        });
+
+        profileValues.forEach((profile) => {
+
+            if (profile.sex) {
+                sex[profile.sex]++;
+            }
+            else {
+                sex.unspecified++;
+            }
+
+            if (profile.degree) {
+                degree[profile.degree]++;
+            }
+            else {
+                degree.unspecified++;
+            }
+
+        });
+        res.render('pages/admin/dashboard', {
+            stats: [
+                {
+                    id: "chart1",
+                    chartType : "pie",
+                    keys: Object.keys(sex),
+                    values: Object.values(sex),
+                    label: "User Sex"
+                },
+                {   
+                    id: "chart2",
+                    chartType : "bar",
+                    keys: Object.keys(degree),
+                    values: Object.values(degree),
+                    label: "User Degree"
+                }]
+        });
+    });
+
+
 }
 
 exports.userGet = function (req, res) {
@@ -52,20 +97,20 @@ exports.surveyGet = function (req, res) {
                     [Op.like]: search
                 }
             },
-            include : [{
-                model : models.User
+            include: [{
+                model: models.User
             }],
             offset: CONFIG.SQL_LIMIT * page,
             limit: CONFIG.SQL_LIMIT
         }
     ).then((surveys) => {
-        
+
         let surveyValues = surveys.rows.map((survey) => {
             let surveyObj = survey.dataValues;
             surveyObj.User = surveyObj.User.dataValues;
             return surveyObj;
         });
-        console.log(surveyValues[0]);
+
         res.render('pages/admin/survey',
             {
                 surveys: surveyValues,
