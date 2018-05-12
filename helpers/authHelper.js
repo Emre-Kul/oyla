@@ -17,6 +17,10 @@ exports.isLogined = function (req, res, next) {
 }
 
 exports.isAdmin = function (req, res, next) {
-    //control login too
-    next();
+    if(req.session.user && req.session.user.UserMeta['is_admin'] && req.session.user.UserMeta['is_admin'] === '1'){
+        next();
+    }
+    else{
+        res.redirect('/')
+    }
 }

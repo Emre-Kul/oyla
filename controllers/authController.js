@@ -6,16 +6,24 @@ exports.loginGet = function (req, res) {
 
 exports.loginPost = function (req, res) {
     const { email, password } = req.body;
-    console.log(email,password);
+    console.log(email, password);
     models.User.findOne({
-        where: { email: email }
+        where: { email: email },
+        include: [{
+            model: models.UserMeta
+        }],
     }).then((user) => {
         if (!user || !user.validPassword(password)) {
             res.render('pages/auth/login', { error: { message: "Invalid username or password" } });
         }
         else {
-            console.log(user);
-            req.session.user = user.dataValues;
+            let userObj = user.dataValues;
+            userObj.UserMeta = {};
+            user.UserMeta.forEach((userMeta) => {
+                userObj.UserMeta[userMeta.key] = userMeta.value;
+            });
+            console.log(userObj);
+            req.session.user = userObj;
             res.redirect('/user/dashboard');
         }
     }).catch((err) => {
