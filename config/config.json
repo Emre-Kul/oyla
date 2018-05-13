@@ -4,7 +4,12 @@
     "password": null,
     "database": "oyla_development",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": {
+      "charset": "utf8",
+      "collate": "utf8_general_ci", 
+      "timestamps": true
+    }
   },
   "test": {
     "username": "root",
