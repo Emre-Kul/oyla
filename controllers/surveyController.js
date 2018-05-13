@@ -163,8 +163,9 @@ exports.submitSurveyPost = function (req, res) {
                     }));
                 }
 
-                return Promise.all(promises)
             }
+            
+            return Promise.all(promises)
         }).then(() => {
             models.Survey.findById(req.params.surveyId, {
                 include: [{
