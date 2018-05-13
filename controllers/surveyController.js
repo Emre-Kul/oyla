@@ -136,7 +136,7 @@ exports.submitSurveyPost = function (req, res) {
         models.sequelize.transaction(function(t) {
             var promises = []
             for (var i = 0; i < req.body.answers.length; i++) {
-                if (undefined === req.body.answers[i].answers) {
+                if (undefined === req.body.answers[i].answer) {
                     if (Array.isArray(req.body.answers[i].option_id)) {
                         for (var j = 0; j < req.body.answers[i].option_id.length; j++) {
                             promises.push(models.Answer.create({
