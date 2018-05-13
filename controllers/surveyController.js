@@ -7,7 +7,10 @@ exports.showSurveyGet = function (req, res) {
         include: [{
             all: true,
             nested: true
-        }]
+        }],
+        order: [
+            [models.Question, 'id']
+        ]
     }).then((survey) => {
         //res.send(survey)
         res.render('pages/survey/showSurvey', {
@@ -133,11 +136,19 @@ exports.submitSurveyPost = function (req, res) {
         models.sequelize.transaction(function(t) {
             var promises = []
             for (var i = 0; i < req.body.answers.length; i++) {
-                if (Array.isArray(req.body.answers[i].option_id)) {
-                    for (var j = 0; j < req.body.answers[i].option_id.length; j++) {
+                if (undefined === req.body.answers[i].answers) {
+                    if (Array.isArray(req.body.answers[i].option_id)) {
+                        for (var j = 0; j < req.body.answers[i].option_id.length; j++) {
+                            promises.push(models.Answer.create({
+                                option_id: req.body.answers[i].option_id[j],
+                                survey_record_id: record.id
+                            }, {
+                                transaction: t
+                            }));
+                        }
+                    } else {
                         promises.push(models.Answer.create({
-                            answer: req.body.answers[i].answer,
-                            option_id: req.body.answers[i].option_id[j],
+                            option_id: req.body.answers[i].option_id,
                             survey_record_id: record.id
                         }, {
                             transaction: t
@@ -146,12 +157,13 @@ exports.submitSurveyPost = function (req, res) {
                 } else {
                     promises.push(models.Answer.create({
                         answer: req.body.answers[i].answer,
-                        option_id: req.body.answers[i].option_id,
                         survey_record_id: record.id
                     }, {
                         transaction: t
                     }));
                 }
+
+                return Promise.all(promises)
             }
         }).then(() => {
             models.Survey.findById(req.params.surveyId, {
