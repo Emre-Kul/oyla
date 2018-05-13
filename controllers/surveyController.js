@@ -119,5 +119,62 @@ exports.createSurveyPost = function (req, res) {
 }
 
 exports.submitSurveyPost = function (req, res) {
-    res.send(req.body);
+    var ip = req.headers['x-forwarded-for'] || 
+         req.connection.remoteAddress || 
+         req.socket.remoteAddress || 
+         req.connection.socket.remoteAddress
+
+    models.SurveyRecord.create({
+        ip: ip,
+        user_id: req.session.user.id,
+        survey_id: req.params.surveyId
+    }).then((record) => {
+
+        models.sequelize.transaction(function(t) {
+            var promises = []
+            for (var i = 0; i < req.body.answers.length; i++) {
+                if (Array.isArray(req.body.answers[i].option_id)) {
+                    for (var j = 0; j < req.body.answers[i].option_id.length; j++) {
+                        promises.push(models.Answer.create({
+                            answer: req.body.answers[i].answer,
+                            option_id: req.body.answers[i].option_id[j],
+                            survey_record_id: record.id
+                        }, {
+                            transaction: t
+                        }));
+                    }
+                } else {
+                    promises.push(models.Answer.create({
+                        answer: req.body.answers[i].answer,
+                        option_id: req.body.answers[i].option_id,
+                        survey_record_id: record.id
+                    }, {
+                        transaction: t
+                    }));
+                }
+            }
+        }).then(() => {
+            models.Survey.findById(req.params.surveyId, {
+                include: [{
+                    all: true,
+                    nested: true
+                }]
+            }).then((survey) => {
+                res.render('pages/survey/showSurvey', {
+                    survey: survey,
+                    notification: {
+                        type: "success",
+                        text: "The survey has been submitted successfully."
+                    }
+                });
+            })
+        }).catch((err) => {
+            console.log(err)
+            res.status(400).send(undefined === err.errors ? "Couldn't submit the survey." : err.errors[0].message);
+        })
+
+    }).catch((err) => {
+        console.log(err)
+        res.status(400).send(undefined === err.errors ? "Couldn't submit the survey." : err.errors[0].message);
+    })
 }
