@@ -9,10 +9,10 @@ exports.showSurveyGet = function (req, res) {
             nested: true
         }]
     }).then((survey) => {
-        //res.send(survey)
-        res.render('pages/survey/showSurvey', {
+        res.send(survey)
+        /*res.render('pages/survey/showSurvey', {
             survey: survey
-        });
+        });*/
     }).catch((err) => {
         res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
     })
@@ -30,39 +30,65 @@ exports.createSurveyPost = function (req, res) {
     console.log(req.body);
 
     var i, j;
-    var input_question;
-    var input_options;
+    var promises, questionPromises;
 
     models.Survey.create({
         title: req.body.title,
         description: req.body.description,
         user_id: req.session.user.id
     }).then((survey) => {
-        for (i = 0; i < req.body.questions.length; i++) {
-            input_question = req.body.questions[i];
-            models.Question.create({
-                question: input_question.question,
-                type: input_question.type,
-                min_length: input_question.min_length,
-                max_length: input_question.max_length,
-                survey_id: survey.id
-            }).then((question) => {
-                if (undefined !== input_question.options) {
-                    for (j = 0; j < input_question.options.length; j++) {
-                        models.Option.create({
-                            option: input_question.options[j],
-                            question_id: question.id
-                        });
+
+        models.sequelize.transaction(function(t) {
+            promises = []
+            for (i = 0; i < req.body.questions.length; i++) {
+                promises.push(models.Question.create({
+                    question: req.body.questions[i].question,
+                    type: req.body.questions[i].type,
+                    min_length: req.body.questions[i].min_length,
+                    max_length: req.body.questions[i].max_length,
+                    survey_id: survey.id
+                }, {
+                    transaction: t
+                }));
+            }
+
+            return Promise.all(promises).then(function(questions) {
+                questionPromises = []
+                for (i = 0; i < req.body.questions.length; i++) {
+                    if (undefined !== req.body.questions[i].options) {
+                        for (j = 0; j < req.body.questions[i].options.length; j++) {
+                            questionPromises.push(models.Option.create({
+                                option: req.body.questions[i].options[j],
+                                question_id: questions[i].id
+                            }, {
+                                transaction: t
+                            }));
+                        }
                     }
                 }
+
+                return Promise.all(questionPromises);
             });
-        }
+                
+        }).then(() => {
+            res.redirect('/survey/' + survey.id);
+        }).catch((err) => {
+            res.render('pages/survey/newSurvey', {
+                notification: {
+                    type: "error",
+                    text: "Couldn't create survey."
+                }
+            })
+            console.log(err);
+        });
 
-        //TODO: Save survey options.
-
-        res.redirect('/survey/' + survey.id);
     }).catch((err) => {
-        res.status(400).send(undefined === err.errors ? "Couldn't create survey." : err.errors[0].message);
+        res.render('pages/survey/newSurvey', {
+            notification: {
+                type: "error",
+                text: "Couldn't create survey."
+            }
+        })
         console.log(err);
     });
 }
