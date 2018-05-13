@@ -9,10 +9,10 @@ exports.showSurveyGet = function (req, res) {
             nested: true
         }]
     }).then((survey) => {
-        res.send(survey)
-        /*res.render('pages/survey/showSurvey', {
+        //res.send(survey)
+        res.render('pages/survey/showSurvey', {
             survey: survey
-        });*/
+        });
     }).catch((err) => {
         res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
     })
@@ -116,4 +116,8 @@ exports.createSurveyPost = function (req, res) {
         })
         console.log(err);
     });
+}
+
+exports.submitSurveyPost = function (req, res) {
+    res.send(req.body);
 }

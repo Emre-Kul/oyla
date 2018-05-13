@@ -18,7 +18,7 @@
         <p class="lead"><%= survey.description %></p>
         <hr class="my-4">
         <p class="lead">
-            <form>
+            <form id="survey" method="POST">
                 <% for (var i = 0; i < survey.Questions.length; i++) { %>
                     <div class="question card">
                         <div class="card-body">
@@ -26,54 +26,58 @@
                             <div class="card-text">
                                 <% switch (survey.Questions[i].type) {
                                     case "textBox": %>
-                                    <input type="text" class="form-control" name="answers[<%= i %>]" placeholder="Your Answer">
+                                    <input type="text" class="form-control" name="answers[<%= i %>][answer]" placeholder="Your Answer" minlength="<%= survey.Questions[i].min_length %>" maxlength="<%= survey.Questions[i].max_length %>" required>
                                     <% break;
                                     case "checkBox":
                                         for (var j = 0; j < survey.Questions[i].Options.length; j++) { %>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="checkbox_0.63mn_0">
-                                                <label class="form-check-label" for="checkbox_0.63mn_0"><%= survey.Questions[i].Options[j].option %></label>
+                                                <input class="form-check-input" type="checkbox" id="checkbox<%= survey.Questions[i].Options[j].id %>" name="answers[<%= i %>][option_id]" value="<%= survey.Questions[i].Options[j].id %>">
+                                                <label class="form-check-label" for="checkbox<%= survey.Questions[i].Options[j].id %>"><%= survey.Questions[i].Options[j].option %></label>
                                             </div>
                                         <% }
                                     break;
                                     case "multipleChoices":
                                         for (var j = 0; j < survey.Questions[i].Options.length; j++) { %>
                                             <div class="form-check">
-                                                <input class="form-check-input" name="radio_0.qnbc" id="radio_0.qnbc_0" type="radio" value="">
-                                                <label class="form-check-label" for="radio_0.qnbc_0"><%= survey.Questions[i].Options[j].option %></label>
+                                                <input class="form-check-input" id="radio<%= survey.Questions[i].Options[j].id %>" name="answers[<%= i %>][option_id]" type="radio" value="<%= survey.Questions[i].Options[j].id %>" required>
+                                                <label class="form-check-label" for="radio<%= survey.Questions[i].Options[j].id %>"><%= survey.Questions[i].Options[j].option %></label>
                                             </div>
                                         <% }
                                     break;
                                     case "dropdownList": %>
-                                        <select class="form-control">
+                                        <select class="form-control" name="answers[<%= i %>][option_id]">
                                         <% for (var j = 0; j < survey.Questions[i].Options.length; j++) { %>
-                                            <option><%= survey.Questions[i].Options[j].option %></option>
+                                            <option value="<%= survey.Questions[i].Options[j].id %>"><%= survey.Questions[i].Options[j].option %></option>
                                         <% } %>
                                         </select>
                                     <% break;
                                     case "rating": %>
-                                        <select class="bar-rating">
+                                        <select class="bar-rating" name="answers[<%= i %>][option_id]">
                                         <% for (var j = 0; j < survey.Questions[i].Options.length; j++) { %>
-                                            <option><%= survey.Questions[i].Options[j].option %></option>
+                                            <option value="<%= survey.Questions[i].Options[j].id %>"><%= survey.Questions[i].Options[j].option %></option>
                                         <% } %>
                                         </select>
                                     <% break;
                                     case "sorting": %>
-                                        <div class="dd">
+                                        <div class="dd" data-index="<%= i %>">
                                             <ol class="dd-list">
                                                 <% for (var j = 0; j < survey.Questions[i].Options.length; j++) { %>
-                                                    <li class="dd-item" data-id="<%= i %>"><div class="dd-handle"><%= survey.Questions[i].Options[j].option %></div></li>
+                                                    <li class="dd-item" data-id="<%= survey.Questions[i].Options[j].id %>"><div class="dd-handle"><%= survey.Questions[i].Options[j].option %></div></li>
                                                 <% } %>
                                             </ol>
                                         </div>
                                     <% break;
                                 } %>
+                                <input type="hidden" name="answers[<%= i %>][question_id]" value="<%= survey.Questions[i].id %>">
                             </div>
                         </div>
                     </div>
                 <% } %>
 
-                <button type="submit" class="btn btn-primary">Complete the survey</button>
+                <div class="form-group float-right">
+                    <button type="submit" class="btn btn-primary">Complete the survey</button>
+                </div>
+                <br/>
             </form>
         </p>
             
@@ -90,6 +94,25 @@
 
             $('.bar-rating').barrating({
                 theme: 'bars-1to10'
+            });
+
+            $('#survey').submit(function(event) {
+                event.preventDefault()
+
+                $('.dd').each(function(index) {
+                    var sorted_options = $(this).nestable('serialize')
+                    var index = $(this).data('index')
+                    var input
+
+                    for (var i = 0; i < sorted_options.length; i++) {
+                        input = '<input type="hidden" name="answers[' + index + '][option_id][' + i + ']" value="' + sorted_options[i].id + '">'
+                        $(this).append(input)
+                    }
+                    
+                })
+
+                $(this).unbind('submit')
+                $(this).submit()
             });
         });
     </script>

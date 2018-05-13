@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     models.Answer.belongsTo(models.Option, {
       onDelete: "CASCADE",
       foreignKey: {
-        allowNull: false
+        allowNull: true
       }
     });
     models.Answer.belongsTo(models.SurveyRecord, {
