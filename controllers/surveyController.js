@@ -71,6 +71,31 @@ exports.createSurveyPost = function (req, res) {
             });
                 
         }).then(() => {
+
+            if (undefined !== req.body.private_survey) {
+                models.SurveyMeta.create({
+                    key: "private_survey",
+                    value: "true",
+                    survey_id: survey.id
+                })
+            }
+
+            if (undefined !== req.body.show_results) {
+                models.SurveyMeta.create({
+                    key: "show_results",
+                    value: "true",
+                    survey_id: survey.id
+                })
+            }
+
+            if (undefined !== req.body.ip_restriction) {
+                models.SurveyMeta.create({
+                    key: "ip_restriction",
+                    value: "true",
+                    survey_id: survey.id
+                })
+            }
+
             res.redirect('/survey/' + survey.id);
         }).catch((err) => {
             res.render('pages/survey/newSurvey', {
