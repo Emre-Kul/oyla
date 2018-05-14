@@ -97,15 +97,33 @@ exports.reportSurveyGet = function(req, res) {
 }
 
 exports.reportUserAnswersGet = function(req, res) {
+<<<<<<< HEAD
     models.Survey.findById(req.params.survey_id, {
+=======
+    models.SurveyRecord.findById(req.params.record_id, {
+>>>>>>> b7f5f0fde8e5894d858e69e3a1456b2575b4e141
         include: [{
-            all: true,
-            nested: true
-        }]
-    }).then((survey) => {
-        //res.send(survey);
+            model: models.Survey,
+            include: [{
+                model: models.Question,
+                include: [{
+                    model: models.Answer,
+                    where: {
+                        survey_record_id: req.params.record_id
+                    },
+                    include: [{
+                        model: models.Option
+                    }]
+                }]
+            }]
+        }],
+        order: [
+            [models.Survey, models.Question, 'id']
+        ]
+    }).then((record) => {
+        //res.send(record);
         res.render('pages/report/userAnswers', {
-            survey: survey
+            survey: record.Survey
         });
     }).catch((err) => {
         console.log(err)

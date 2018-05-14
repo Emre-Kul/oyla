@@ -18,7 +18,7 @@ userRouter.get('/setting', authHelper.isLogined, userController.userSettingGet);
 userRouter.post('/setting', authHelper.isLogined, userController.userSettingPost);
 
 userRouter.get('/report/survey/:survey_id', authHelper.isLogined, reportController.reportSurveyGet);
-userRouter.get('/report/survey/answers/:survey_id', authHelper.isLogined, reportController.reportUserAnswersGet);
+userRouter.get('/report/survey/answers/:record_id', authHelper.isLogined, reportController.reportUserAnswersGet);
 
 userRouter.get('/logout', authHelper.isLogined, userController.logoutGet);
 
