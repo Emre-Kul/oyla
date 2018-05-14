@@ -14,7 +14,7 @@ exports.loginPost = function (req, res) {
         }],
     }).then((user) => {
         if (!user || !user.validPassword(password)) {
-            res.render('pages/auth/login', { error: { message: "Invalid username or password" } });
+            res.render('pages/auth/login', { form: { email: email}, error: { message: "Invalid username or password" } });
         }
         else {
             let userObj = user.dataValues;
@@ -40,12 +40,12 @@ exports.registerPost = function (req, res) {
     const { username, email, password, repassword } = req.body;
 
     if (password !== repassword) {
-        res.render('pages/auth/register', { error: { message: "Passwords are not same !" } });
+        res.render('pages/auth/register', { form: { username: username, email: email}, error: { message: "Passwords are not same !" } });
         return;
     }
 
     if (password.length > 10 || password.length < 4) {//i will delete this magic numbers
-        res.render('pages/auth/register', { error: { message: "Password must be between 4 and 10" } });
+        res.render('pages/auth/register', { form: { username: username, email: email}, error: { message: "Password must be between 4 and 10" } });
         return;
     }
 
@@ -62,6 +62,6 @@ exports.registerPost = function (req, res) {
         let msg = err.errors[0].path;
         msg = msg[0].toUpperCase() + msg.substring(1);
         msg += " has been already taken !";
-        res.render('pages/auth/register', { error: { message: msg } });
+        res.render('pages/auth/register', { form: { username: username, email: email}, error: { message: msg } });
     });
 }
