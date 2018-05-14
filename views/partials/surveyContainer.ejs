@@ -25,7 +25,10 @@
             <% } %>
 
             <% if(typeof surveyDeleteShow !== "undefined") { %>
-                <div class="col  text-right">
+                <div class="col text-right">
+                    <a class="text-light mr-2" href="/user/report/survey/<%= survey.id %>">
+                        <i class="fas fa-newspaper"></i> 
+                    </a>
                     <a class="text-light" href="/user/survey/delete/<%= survey.id %>" onclick="return confirm('Are you sure?')">
                         <i class="fas fa-trash"></i> 
                     </a>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../partials/head.ejs %>
+    <title>Oyla</title>
+</head>
+
+<body>
+    <% include ../../partials/header.ejs %>
+    <main role="main" class="container">
+        <h1>Participants</h1>
+                <table class="table table-inverse">
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>IsMember</th>
+                        <th>IpAdress</th>
+                        <th>--------</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%  let i,surveyRecord;
+                            for(i = 0;i < surveyRecords.length;i++){
+                            surveyRecord = surveyRecords[i];
+                        %>
+                        <tr>
+                            <th scope="row"><%= pagination.pageStart+i+1 %></th>
+                            <td><%= (surveyRecord.user_id) ? "YES" : "NO"  %></td>
+                            <td><%= surveyRecord.ip %></td>
+                            <td><a href="/user/report/survey/answers/<%= surveyRecord.id %>">Detail</a></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <% include ../../partials/paginationBar.ejs %>
+    </main>
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>
