@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
     models.Question.hasMany(models.Option);
+    models.Question.hasMany(models.Answer);
   };
   return Question;
 };

@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+    models.Answer.belongsTo(models.Question, {
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
+    })
   };
   return Answer;
 };
