@@ -30,6 +30,9 @@
                                        id="username" 
                                        name="username" 
                                        placeholder="Username" 
+                                       <% if(typeof form !== 'undefined') { %>
+                                          value="<%= form.username %>"
+                                       <% } %>
                                        required="required"
                                        maxlength="50"/> 
                             </div>
@@ -39,7 +42,10 @@
                                        class="form-control" 
                                        id="email" 
                                        name="email" 
-                                       placeholder="Email" 
+                                       placeholder="Email"
+                                       <% if(typeof form !== 'undefined') { %>
+                                          value="<%= form.email %>"
+                                       <% } %>
                                        required="required"
                                        maxlength="50"/>
                             </div>
