@@ -20,15 +20,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%  let i,surveyRecord;
-                            for(i = 0;i < surveyRecords.length;i++){
-                            surveyRecord = surveyRecords[i];
-                        %>
+                        <% for (var i = 0; i < surveyRecords.length; i++) { %>
                         <tr>
                             <th scope="row"><%= pagination.pageStart+i+1 %></th>
-                            <td><%= (surveyRecord.user_id) ? "YES" : "NO"  %></td>
-                            <td><%= surveyRecord.ip %></td>
-                            <td><a href="/user/report/survey/answers/<%= surveyRecord.survey_id %>">Detail</a></td>
+                            <td><%= (surveyRecords[i].user_id) ? "YES" : "NO"  %></td>
+                            <td><%= surveyRecords[i].ip %></td>
+                            <td><a href="/user/report/survey/answers/<%= surveyRecords[i].id %>">Detail</a></td>
                         </tr>
                         <% } %>
                     </tbody>
