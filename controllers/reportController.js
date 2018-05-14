@@ -31,9 +31,20 @@ exports.reportSurveyGet = function(req, res) {
         console.log(e);
         res.redirect('/error/500');
     });
-
 }
 
 exports.reportUserAnswersGet = function(req, res) {
-    res.render('pages/report/userAnswers');
+     models.SurveyRecord.findById(req.params.record_id, {
+        include: [{
+            all: true,
+            nested: true
+        }]
+    }).then((surveyRecord) => {
+        console.log(surveyRecord.Answers);
+        res.render('pages/report/userAnswers', {
+            survey: surveyRecord.dataValues.Survey.dataValues
+        });
+    }).catch((err) => {
+        res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
+    });
 }
