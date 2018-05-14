@@ -97,11 +97,7 @@ exports.reportSurveyGet = function(req, res) {
 }
 
 exports.reportUserAnswersGet = function(req, res) {
-<<<<<<< HEAD
-    models.Survey.findById(req.params.survey_id, {
-=======
     models.SurveyRecord.findById(req.params.record_id, {
->>>>>>> b7f5f0fde8e5894d858e69e3a1456b2575b4e141
         include: [{
             model: models.Survey,
             include: [{
