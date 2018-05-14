@@ -29,7 +29,10 @@
                                        class="form-control" 
                                        id="email" 
                                        name="email" 
-                                       placeholder="Email" 
+                                       placeholder="Email"
+                                       <% if(typeof form !== 'undefined') { %> 
+                                          value="<%= form.email %>"
+                                       <% } %>
                                        required="required"
                                        maxlength="50"/>
                             </div>
@@ -39,7 +42,8 @@
                                        id="password" 
                                        name="password" 
                                        class="form-control" 
-                                       required="required" 
+                                       placeholder="Password"
+                                       required="required"
                                        maxlength="50" />
                             </div>
                             <div class="from-group">
