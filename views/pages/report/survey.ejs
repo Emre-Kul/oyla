@@ -28,7 +28,7 @@
                             <th scope="row"><%= pagination.pageStart+i+1 %></th>
                             <td><%= (surveyRecord.user_id) ? "YES" : "NO"  %></td>
                             <td><%= surveyRecord.ip %></td>
-                            <td><a href="/user/report/survey/answers/<%= surveyRecord.id %>">Detail</a></td>
+                            <td><a href="/user/report/survey/answers/<%= surveyRecord.survey_id %>">Detail</a></td>
                         </tr>
                         <% } %>
                     </tbody>

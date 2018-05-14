@@ -34,17 +34,18 @@ exports.reportSurveyGet = function(req, res) {
 }
 
 exports.reportUserAnswersGet = function(req, res) {
-     models.SurveyRecord.findById(req.params.record_id, {
+     models.Survey.findById(req.params.survey_id, {
         include: [{
             all: true,
             nested: true
         }]
-    }).then((surveyRecord) => {
-        console.log(surveyRecord.Answers);
+    }).then((survey) => {
+        //res.send(survey);
         res.render('pages/report/userAnswers', {
-            survey: surveyRecord.dataValues.Survey.dataValues
+            survey: survey
         });
     }).catch((err) => {
+        console.log(err)
         res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
     });
 }
