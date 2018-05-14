@@ -12,19 +12,17 @@ exports.showSurveyGet = function (req, res) {
             [models.Question, 'id']
         ]
     }).then((survey) => {
-        models.SurveyRecord.count({
+        models.SurveyRecord.findOne({
             where: {
                 user_id: req.session.user.id,
                 survey_id: survey.id
             }
-        }).then((count) => {
-            //res.send(survey)
-            res.render('pages/survey/showSurvey', {
-                survey: survey,
-                hasRecord: count != 0
-            });
+        }).then((record) => {
+            res.redirect('/user/report/survey/answers/' + record.id)
         }).catch((err) => {
-            console.log(err);
+            res.render('pages/survey/showSurvey', {
+                survey: survey
+            });
         })
     }).catch((err) => {
         console.log(err);
@@ -199,14 +197,7 @@ exports.submitSurveyPost = function (req, res) {
                     nested: true
                 }]
             }).then((survey) => {
-                res.render('pages/survey/showSurvey', {
-                    survey: survey,
-                    hasRecord: true,
-                    notification: {
-                        type: "success",
-                        text: "The survey has been submitted successfully."
-                    }
-                });
+                res.redirect('/user/report/survey/answers/' + record.id)
             })
         }).catch((err) => {
             console.log(err)
