@@ -12,11 +12,22 @@ exports.showSurveyGet = function (req, res) {
             [models.Question, 'id']
         ]
     }).then((survey) => {
-        //res.send(survey)
-        res.render('pages/survey/showSurvey', {
-            survey: survey
-        });
+        models.SurveyRecord.count({
+            where: {
+                user_id: req.session.user.id,
+                survey_id: survey.id
+            }
+        }).then((count) => {
+            //res.send(survey)
+            res.render('pages/survey/showSurvey', {
+                survey: survey,
+                hasRecord: count != 0
+            });
+        }).catch((err) => {
+            console.log(err);
+        })
     }).catch((err) => {
+        console.log(err);
         res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);
     })
 
@@ -122,6 +133,18 @@ exports.createSurveyPost = function (req, res) {
 }
 
 exports.submitSurveyPost = function (req, res) {
+    models.SurveyRecord.count({
+        where: {
+            user_id: req.session.user.id,
+            survey_id: req.params.surveyId
+        }
+    }).then((count) => {
+        if (count > 0) {
+            res.send('Invalid request');
+        }
+    })
+
+
     var ip = req.headers['x-forwarded-for'] || 
          req.connection.remoteAddress || 
          req.socket.remoteAddress || 
@@ -141,6 +164,7 @@ exports.submitSurveyPost = function (req, res) {
                         for (var j = 0; j < req.body.answers[i].option_id.length; j++) {
                             promises.push(models.Answer.create({
                                 option_id: req.body.answers[i].option_id[j],
+                                question_id: req.body.answers[i].question_id,
                                 survey_record_id: record.id
                             }, {
                                 transaction: t
@@ -149,6 +173,7 @@ exports.submitSurveyPost = function (req, res) {
                     } else {
                         promises.push(models.Answer.create({
                             option_id: req.body.answers[i].option_id,
+                            question_id: req.body.answers[i].question_id,
                             survey_record_id: record.id
                         }, {
                             transaction: t
@@ -157,6 +182,7 @@ exports.submitSurveyPost = function (req, res) {
                 } else {
                     promises.push(models.Answer.create({
                         answer: req.body.answers[i].answer,
+                        question_id: req.body.answers[i].question_id,
                         survey_record_id: record.id
                     }, {
                         transaction: t
@@ -164,7 +190,7 @@ exports.submitSurveyPost = function (req, res) {
                 }
 
             }
-            
+
             return Promise.all(promises)
         }).then(() => {
             models.Survey.findById(req.params.surveyId, {
@@ -175,6 +201,7 @@ exports.submitSurveyPost = function (req, res) {
             }).then((survey) => {
                 res.render('pages/survey/showSurvey', {
                     survey: survey,
+                    hasRecord: true,
                     notification: {
                         type: "success",
                         text: "The survey has been submitted successfully."
