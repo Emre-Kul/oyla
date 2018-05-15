@@ -97,23 +97,34 @@ exports.dashboardGet = function (req, res) {
             }
 
         });
-        res.render('pages/admin/dashboard', {
-            stats: [
-                {
-                    id: "chart1",
-                    chartType: "pie",
-                    keys: Object.keys(sex),
-                    values: Object.values(sex),
-                    label: "User Sex"
-                },
-                {
-                    id: "chart2",
-                    chartType: "bar",
-                    keys: Object.keys(degree),
-                    values: Object.values(degree),
-                    label: "User Degree"
-                }]
-        });
+
+        models.sequelize.query("SELECT (SELECT COUNT(id) FROM surveys) as num_surveys, (SELECT COUNT(id) FROM questions) as num_questions, (SELECT COUNT(id) FROM answers) as num_answers", {
+            type: models.sequelize.QueryTypes.SELECT
+        }).then((result) => {
+            res.render('pages/admin/dashboard', {
+                stats: [
+                    {
+                        id: "chart1",
+                        chartType: "pie",
+                        keys: Object.keys(sex),
+                        values: Object.values(sex),
+                        label: "User Sex"
+                    },
+                    {
+                        id: "chart2",
+                        chartType: "bar",
+                        keys: Object.keys(degree),
+                        values: Object.values(degree),
+                        label: "User Degree"
+                    }],
+                num_surveys: result[0].num_surveys,
+                num_questions: result[0].num_questions,
+                num_answers: result[0].num_answers
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.send(err)
+        })
     });
 
 
