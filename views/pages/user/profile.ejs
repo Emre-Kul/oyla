@@ -13,17 +13,11 @@
                 <div class="tabbable">
                   <ul class="nav nav-tabs padding-18">
                     <li class="active">
-                      <a data-toggle="tab" href="#home">
-                        <i class="green ace-icon fa fa-user bigger-120"></i>
+                      <div data-toggle="tab">
+                        <i class="text-primary ace-icon fa fa-user bigger-120"></i>
                         Profile
-                      </a>
+                      </div>
                     </li>                  
-                    <li class="ml-4">
-                      <a data-toggle="tab" href="#pictures">
-                        <i class="pink ace-icon fa fa-picture-o bigger-120"></i>
-                        Surveys
-                      </a>
-                    </li>
                   </ul>
           
                   <div class="tab-content no-border">
@@ -37,21 +31,44 @@
                         <div class="col-xs-12 col-sm-9 mt-4">
                             <p class="text-center"><h4><%=user.username %></h4></p>
                             <div class="row">
-                                <div class="border border-info border-left-0 border-right-0 border-top-0">
-                                        <span>E-mail :</span>  <span><%=user.email %></span>
+                                <div class="col-xs-4 col-sm-3">
+                                    <p class="text-right">E-mail :</p>
+                                </div>  
+                                <div class="col-xs-8 col-sm-6">
+                                    <p class="text-left"><%=user.email %></p>
                                 </div>
                             </div>
                             <div class="row">
-                                <span>Full Name :</span>  <span><%=userProfile.fullname %></span>
+                                <div class="col-xs-4 col-sm-3">
+                                    <p class="text-right">Full Name :</p>  
+                                </div>
+                                <div class="col-xs-8 col-sm-6">
+                                    <p class="text-left"><%=userProfile.fullname %></p>
+                                </div>
                             </div>
                             <div class="row">
-                                <span>Sex :</span>  <span><%=userProfile.sex %></span>
+                                <div class="col-xs-4 col-sm-3">
+                                    <p class="text-right">Sex :</p>
+                                </div>
+                                <div class="col-xs-8 col-sm-6">
+                                    <p class="text-left"><%=userProfile.sex %></p>
+                                </div>
                             </div>
                             <div class="row">
-                                <span>Degree :</span>  <span><%=userProfile.degree %></span>
+                                <div class="col-xs-4 col-sm-3">
+                                    <p class="text-right">Degree :</p>
+                                </div>
+                                <div class="col-xs-8 col-sm-6">
+                                    <p class="text-left"><%=userProfile.degree %></p>
+                                </div>
                             </div>
                             <div class="row">
-                                <span>Income :</span> <span><%=userProfile.income %></span>
+                                <div class="col-xs-4 col-sm-3">
+                                    <p class="text-right">Income :</p>
+                                </div>
+                                <div class="col-xs-8 col-sm-6">
+                                    <p class="text-left"><%=userProfile.income %></p>
+                                </div>
                             </div>
                         </div>
                       </div>

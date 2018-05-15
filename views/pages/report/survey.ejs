@@ -3,13 +3,26 @@
 
 <head>
     <% include ../../partials/head.ejs %>
+
+    <script src="/components/chart.js/dist/Chart.bundle.min.js"></script>
+    
     <title>Oyla</title>
 </head>
 
 <body>
     <% include ../../partials/header.ejs %>
     <main role="main" class="container">
-        <h1>Participants</h1>
+        <h1 class="text-center">Report</h1>
+        <p class="text-info">This is a limited report we can't show inputs like textbox.</p>
+        <p><span class="text-danger"><%= surveyRecordCount %> </span>people take the survey.</p>
+        <div class="row">
+                    <% for(stat of stats) { %>
+                        <div class="col-6">
+                            <% include ../../partials/chartContainer.ejs %>
+                        </div>
+                    <% } %>
+                </div>
+        <h1 class="text-center">Participants</h1>
                 <table class="table table-inverse">
                     <thead>
                         <tr>
