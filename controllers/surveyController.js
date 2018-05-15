@@ -138,16 +138,18 @@ exports.createSurveyPost = function (req, res) {
 }
 
 exports.submitSurveyPost = function (req, res) {
-    models.SurveyRecord.count({
-        where: {
-            user_id: req.session.user.id,
-            survey_id: req.params.surveyId
-        }
-    }).then((count) => {
-        if (count > 0) {
-            res.send('Invalid request');
-        }
-    })
+    if(req.session.user) {
+        models.SurveyRecord.count({
+            where: {
+                user_id: req.session.user.id,
+                survey_id: req.params.surveyId
+            }
+        }).then((count) => {
+            if (count > 0) {
+                res.send('Invalid request');
+            }
+        })
+    }
 
 
     var ip = req.headers['x-forwarded-for'] || 
@@ -157,7 +159,7 @@ exports.submitSurveyPost = function (req, res) {
 
     models.SurveyRecord.create({
         ip: ip,
-        user_id: req.session.user.id,
+        user_id: req.session.user ? req.session.user.id : null,
         survey_id: req.params.surveyId
     }).then((record) => {
 
@@ -204,7 +206,11 @@ exports.submitSurveyPost = function (req, res) {
                     nested: true
                 }]
             }).then((survey) => {
-                res.redirect('/user/report/survey/answers/' + record.id)
+                if (req.session.user) {
+                    res.redirect('/user/report/survey/answers/' + record.id)
+                } else {
+                    res.redirect('/survey/' + req.params.surveyId)
+                }
             })
         }).catch((err) => {
             console.log(err)
