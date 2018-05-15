@@ -119,7 +119,8 @@ exports.reportUserAnswersGet = function(req, res) {
     }).then((record) => {
         //res.send(record);
         res.render('pages/report/userAnswers', {
-            survey: record.Survey
+            survey: record.Survey,
+            created_at: record.created_at
         });
     }).catch((err) => {
         console.log(err)

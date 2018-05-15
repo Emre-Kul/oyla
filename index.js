@@ -7,6 +7,7 @@ const models = require('./models');
 const app = express();
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+app.locals.moment = require('moment');
 
 app.set('view engine', 'ejs');
 

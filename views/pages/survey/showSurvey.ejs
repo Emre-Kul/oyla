@@ -16,6 +16,7 @@
     <main role="main" class="container">
         <h1 class="mt-2"><%= survey.title %></h1>
         <p class="lead"><%= survey.description %></p>
+        <span class="badge badge-info float-right"><%= moment(survey.created_at).fromNow() %></span>
         <hr class="my-4">
         <p class="lead">
             <form id="survey" method="POST">

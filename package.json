@@ -19,6 +19,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "moment": "^2.22.1",
     "mysql2": "^1.5.2",
     "sequelize": "^4.35.5"
   },

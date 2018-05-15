@@ -12,18 +12,25 @@ exports.showSurveyGet = function (req, res) {
             [models.Question, 'id']
         ]
     }).then((survey) => {
-        models.SurveyRecord.findOne({
-            where: {
-                user_id: req.session.user.id,
-                survey_id: survey.id
-            }
-        }).then((record) => {
-            res.redirect('/user/report/survey/answers/' + record.id)
-        }).catch((err) => {
+        if (req.session.user) {
+            models.SurveyRecord.findOne({
+                where: {
+                    user_id: req.session.user.id,
+                    survey_id: survey.id
+                }
+            }).then((record) => {
+                res.redirect('/user/report/survey/answers/' + record.id)
+            }).catch((err) => {
+                res.render('pages/survey/showSurvey', {
+                    survey: survey
+                });
+            })
+        } else {
             res.render('pages/survey/showSurvey', {
                 survey: survey
             });
-        })
+        }
+        
     }).catch((err) => {
         console.log(err);
         res.status(400).send(undefined === err.errors ? "Couldn't find the survey." : err.errors[0].message);

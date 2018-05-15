@@ -12,15 +12,20 @@
         
         <main role="main" class="container">
             <div class="row">
-                <div class="col-sm-8">
-                    <div class="container">
-                        <% include ../../partials/searchBar.ejs %>
-                         <%  for(survey of surveys){ %>
-                            <% include ../../partials/surveyContainer.ejs %>
+                <div class="container">
+
+                    <% include ../../partials/searchBar.ejs %>
+                        <% if (surveys.length) { %>
+                            <%  for(survey of surveys) { %>
+                                <% include ../../partials/surveyContainer.ejs %>
+                            <% } %>
+                            <% include ../../partials/paginationBar.ejs %>
+                        <% } else { %>
+                            <span class="lead">Couldn't find any surveys.</span>
                         <% } %>
-                        <% include ../../partials/paginationBar.ejs %>
-                    </div>
+                        
                 </div>
+            </div>
         </main>
 
         <% include ../../partials/footer.ejs %>
