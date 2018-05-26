@@ -29,10 +29,16 @@ function install() {
     models.sequelize.sync().then(function () {
         console.log("Connected to database!");
         console.log("Creating admin!");
-        createAdmin().then(console.log).catch(console.log);
+        createAdmin().then( (msg) => {
+            console.log(msg);
+            process.exit();
+        }).catch( (err) => {
+            console.log(err);
+            process.exit();
+        });
     }).catch(err => {
-        process.exit();
         console.error('Unable to connect to the database: ', err);
+        process.exit();
     });
 }
 

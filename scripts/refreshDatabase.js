@@ -5,6 +5,7 @@ models.sequelize.sync({force : true}).then(function () {
     process.exit();
 }).catch(err => {
     console.error('Unable to connect to the database: ', err);
+    process.exit();
 });
 
 //Not a best way for migration but it's working :D
